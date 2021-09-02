@@ -1,52 +1,89 @@
-# Very short description of the package
+# Supermodels for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/chargefield/supermodel.svg?style=flat-square)](https://packagist.org/packages/chargefield/supermodel)
-[![Total Downloads](https://img.shields.io/packagist/dt/chargefield/supermodel.svg?style=flat-square)](https://packagist.org/packages/chargefield/supermodel)
-![GitHub Actions](https://github.com/chargefield/supermodel/actions/workflows/main.yml/badge.svg)
+[![Latest Stable Version](https://poser.pugx.org/chargefield/supermodels/v/stable)](https://packagist.org/packages/chargefield/supermodels)
+[![Total Downloads](https://poser.pugx.org/chargefield/supermodels/downloads)](https://packagist.org/packages/chargefield/supermodels)
+[![License](https://poser.pugx.org/chargefield/supermodels/license)](https://packagist.org/packages/chargefield/supermodels)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Supermodels is a Laravel package that will help you organize your business logic.
 
 ## Installation
-
 You can install the package via composer:
-
 ```bash
-composer require chargefield/supermodel
+composer require chargefield/supermodels
 ```
 
 ## Usage
-
+A simple example for storing a record.
 ```php
-// Usage description here
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use Illuminate\Http\Request;
+
+class PostController
+{
+    public function store(Request $request)
+    {
+        $post = Post::make()->savable($request->all())->save();
+    }
+}
+```
+with validation (if validation fails, it will throw a Illuminate\Validation\ValidationException by default)
+```php
+$post = Post::make()->savable($request->all())->validate()->save();
+```
+
+### Savable Trait
+An example of how to use the Savable trait in a model.
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Chargefield\Supermodel\Traits\Savable;
+use Chargefield\Supermodel\Fields\JsonField;
+use Chargefield\Supermodel\Fields\SlugField;
+use Chargefield\Supermodel\Fields\ImageField;
+use Chargefield\Supermodel\Fields\StringField;
+use Chargefield\Supermodel\Fields\BooleanField;
+use Chargefield\Supermodel\Fields\DatetimeField;
+
+class Post extends Model
+{
+    use Savable;
+
+    public function savableColumns(): array
+    {
+        return [
+            StringField::make('title'),
+            SlugField::make('slug')->fromField('title'),
+            StringField::make('body'),
+            ImageField::make('image')->nullable(),
+            BooleanField::make('is_featured'),
+            JsonField::make('options')->nullable(),
+            DatetimeField::make('published_at')->nullable(),
+        ];
+    }
+}
 ```
 
 ### Testing
-
+You can run the tests with:
 ```bash
-composer test
+vendor/bin/phpunit
 ```
 
 ### Changelog
-
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 ## Contributing
-
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
-
-If you discover any security related issues, please email clayton@chargefield.com instead of using the issue tracker.
+If you discover any security related issues, please email support@chargefield.com instead of using the issue tracker.
 
 ## Credits
-
 -   [Clayton D'Mello](https://github.com/chargefield)
 -   [All Contributors](../../contributors)
 
 ## License
-
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
