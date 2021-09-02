@@ -136,7 +136,7 @@ class SavableModel
         $columns = $this->model->savableColumns();
 
         if (empty($columns)) {
-            throw new NoColumnsToSaveException;
+            throw new NoColumnsToSaveException($this->model);
         }
 
         /**
@@ -145,7 +145,7 @@ class SavableModel
          */
         foreach ($columns as $column) {
             if (! ($column instanceof Field)) {
-                throw new FieldNotFoundException($column);
+                throw new FieldNotFoundException($this->model, $column);
             }
 
             $dataKey = $column->getDataKey();

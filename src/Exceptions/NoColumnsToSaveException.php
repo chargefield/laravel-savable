@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class NoColumnsToSaveException extends Exception
 {
-    public function __construct()
+    public function __construct(Model $model)
     {
-        $message = "The savableColumns methods is empty.";
+        $class = get_class($model);
+        $message = "{$class}::savableColumns() is empty.";
         parent::__construct($message);
     }
 }
