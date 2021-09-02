@@ -23,12 +23,12 @@ class TestCase extends BaseTestCase
     protected function setUpRoutes(): void
     {
         Route::post('/posts', function (Request $request) {
-            Post::make()->setPayload($request->all())->validate()->saveData();
+            Post::make()->savable($request->all())->validate()->save();
             return response([], 200);
         })->name('posts.store');
 
         Route::patch('/posts/{id}', function (Request $request, $id) {
-            Post::make($id)->setPayload($request->all())->validate()->saveData();
+            Post::make($id)->savable($request->all())->validate()->save();
             return response([], 200);
         })->name('posts.update');
     }

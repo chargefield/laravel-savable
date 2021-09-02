@@ -4,12 +4,15 @@ namespace Chargefield\Supermodel\Tests\Feature;
 
 use Chargefield\Supermodel\Exceptions\FieldNotFoundException;
 use Chargefield\Supermodel\Exceptions\NoColumnsToSaveException;
+use Chargefield\Supermodel\Exceptions\NotSavableException;
+use Chargefield\Supermodel\SavableModel;
 use Chargefield\Supermodel\Tests\Fixtures\Post;
 use Chargefield\Supermodel\Tests\Fixtures\TestField;
 use Chargefield\Supermodel\Tests\TestCase;
 use Chargefield\Supermodel\Traits\Savable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
 
 class SavableTraitTest extends TestCase
@@ -33,7 +36,7 @@ class SavableTraitTest extends TestCase
             'published_at' => Carbon::now(),
         ];
 
-        $post = Post::make()->setPayload($data)->saveData();
+        $post = Post::make()->savable($data)->save();
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertDatabaseHas('posts', $data);
@@ -61,7 +64,7 @@ class SavableTraitTest extends TestCase
             'published_at' => Carbon::now(),
         ];
 
-        $post->setPayload($data)->saveData();
+        $post->savable($data)->save();
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertDatabaseHas('posts', $data);
@@ -89,7 +92,7 @@ class SavableTraitTest extends TestCase
             'published_at' => Carbon::now(),
         ];
 
-        $newPost = Post::make($post)->setPayload($data)->saveData();
+        $newPost = Post::make($post)->savable($data)->save();
 
         $this->assertInstanceOf(Post::class, $newPost);
         $this->assertDatabaseHas('posts', $data);
@@ -102,7 +105,7 @@ class SavableTraitTest extends TestCase
         $post = new class extends Model {
             use Savable;
 
-            protected function savableColumns(): array
+            public function savableColumns(): array
             {
                 return [];
             }
@@ -110,7 +113,7 @@ class SavableTraitTest extends TestCase
 
         $this->expectException(NoColumnsToSaveException::class);
 
-        $post->saveData();
+        $post->savable()->save();
     }
 
     /** @test */
@@ -119,7 +122,7 @@ class SavableTraitTest extends TestCase
         $post = new class extends Model {
             use Savable;
 
-            protected function savableColumns(): array
+            public function savableColumns(): array
             {
                 return [
                     'not-a-valid-field',
@@ -129,7 +132,7 @@ class SavableTraitTest extends TestCase
 
         $this->expectException(FieldNotFoundException::class);
 
-        $post->setPayload(['title' => 'Example Text'])->saveData();
+        $post->savable(['title' => 'Example Text'])->save();
     }
 
     /** @test */
@@ -141,7 +144,7 @@ class SavableTraitTest extends TestCase
             'body' => 'An example body.',
         ];
 
-        $post = Post::make()->setPayload($data)->saveData();
+        $post = Post::make()->savable($data)->save();
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertDatabaseHas('posts', $data);
@@ -156,7 +159,7 @@ class SavableTraitTest extends TestCase
             'body' => 'An example body.',
         ];
 
-        $post = Post::make()->setPayload($data)->saveData();
+        $post = Post::make()->savable($data)->save();
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertDatabaseHas('posts', array_merge($data, ['slug' => 'example-text']));
@@ -183,7 +186,7 @@ class SavableTraitTest extends TestCase
             }
         };
 
-        $post = $class->setPayload($data)->saveData();
+        $post = $class->savable($data)->save();
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertDatabaseHas('posts', [
@@ -214,7 +217,7 @@ class SavableTraitTest extends TestCase
 
         $this->expectException(ValidationException::class);
 
-        $class->setPayload($data)->validate();
+        $class->savable($data)->validate();
     }
 
     /** @test */
@@ -235,10 +238,10 @@ class SavableTraitTest extends TestCase
             }
         };
 
-        $class->setPayload($data)->validate(false);
+        $savable = $class->savable($data)->validate(false);
 
-        $this->assertTrue($class->hasValidationErrors());
-        $this->assertCount(2, $class->getValidationErrors());
+        $this->assertTrue($savable->hasValidationErrors());
+        $this->assertCount(2, $savable->getValidationErrors());
     }
 
     /** @test */
@@ -257,10 +260,10 @@ class SavableTraitTest extends TestCase
             }
         };
 
-        $class->setPayload($data)->validate( false);
+        $savable = $class->savable($data)->validate( false);
 
-        $this->assertFalse($class->hasValidationErrors());
-        $this->assertCount(0, $class->getValidationErrors());
+        $this->assertFalse($savable->hasValidationErrors());
+        $this->assertCount(0, $savable->getValidationErrors());
     }
 
     /** @test */
@@ -279,9 +282,36 @@ class SavableTraitTest extends TestCase
             }
         };
 
-        $class->setPayload($data)->validate();
+        $savable = $class->savable($data)->validate();
 
-        $this->assertFalse($class->hasValidationErrors());
-        $this->assertCount(0, $class->getValidationErrors());
+        $this->assertFalse($savable->hasValidationErrors());
+        $this->assertCount(0, $savable->getValidationErrors());
+    }
+
+    /** @test */
+    public function it_throws_an_exception_if_model_is_not_savable()
+    {
+        $class = new class extends Model {};
+
+        $this->expectException(NotSavableException::class);
+
+        new SavableModel($class);
+    }
+
+    /** @test */
+    public function it_returns_false_if_no_validator_and_has_validation_errors_is_called()
+    {
+        $savable = new SavableModel(new Post);
+
+        $this->assertFalse($savable->hasValidationErrors());
+    }
+
+    /** @test */
+    public function it_returns_false_if_no_validator_and_get_validation_errors_is_called()
+    {
+        $savable = new SavableModel(new Post);
+
+        $this->assertInstanceOf(MessageBag::class, $savable->getValidationErrors());
+        $this->assertCount(0, $savable->getValidationErrors());
     }
 }

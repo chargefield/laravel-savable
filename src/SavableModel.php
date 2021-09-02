@@ -2,20 +2,21 @@
 
 namespace Chargefield\Supermodel;
 
-use Chargefield\Supermodel\Contracts\SavableInterface;
+use Chargefield\Supermodel\Exceptions\FieldNotFoundException;
+use Chargefield\Supermodel\Exceptions\NoColumnsToSaveException;
+use Chargefield\Supermodel\Exceptions\NotSavableException;
 use Chargefield\Supermodel\Fields\Field;
+use Chargefield\Supermodel\Traits\Savable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class SavableModel
 {
-    /**
-     * @var SavableInterface
-     */
-    protected $model;
+    protected Model $model;
 
     /**
      * @var array|null
@@ -23,37 +24,45 @@ class SavableModel
     protected ?array $rules = null;
 
     /**
-     * @var Validator
+     * @var Validator|null
      */
-    protected Validator $validator;
+    protected ?Validator $validator = null;
 
     /**
      * @var array
      */
-    protected array $payload = [];
+    protected array $data = [];
 
-    public function __construct($model)
+    public function __construct(Model $model, array $data = [])
     {
+        if (! $this->isSavable($model)) {
+            throw new NotSavableException($model);
+        }
+
         $this->model = $model;
+        $this->set($data);
+    }
+
+    /**
+     * @param Model $model
+     * @return bool
+     */
+    protected function isSavable(Model $model): bool
+    {
+        $traits = class_uses_recursive($model);
+
+        return in_array(Savable::class, $traits);
     }
 
     /**
      * @param array $data
      * @return $this
      */
-    public function setPayload(array $data): self
+    public function set(array $data): self
     {
-        $this->payload = $data;
+        $this->data = $data;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPayload(): array
-    {
-        return $this->payload;
     }
 
     /**
@@ -64,7 +73,7 @@ class SavableModel
      */
     public function validate(bool $throwsException = true): self
     {
-        $this->validator = ValidatorFacade::make($this->payload, $this->getValidationRules());
+        $this->validator = ValidatorFacade::make($this->data, $this->getValidationRules());
 
         if ($throwsException) {
             $this->validator->validate();
@@ -115,8 +124,43 @@ class SavableModel
         return $this->rules;
     }
 
-    public function saveData()
+    /**
+     * @return Model
+     *
+     * @throws FieldNotFoundException
+     * @throws NoColumnsToSaveException
+     * @throws Throwable
+     */
+    public function save(): Model
     {
-        return $this->model->saveData();
+        $columns = $this->model->savableColumns();
+
+        if (empty($columns)) {
+            throw new NoColumnsToSaveException;
+        }
+
+        /**
+         * @var string $columnName
+         * @var Field $column
+         */
+        foreach ($columns as $column) {
+            if (! ($column instanceof Field)) {
+                throw new FieldNotFoundException($column);
+            }
+
+            $dataKey = $column->getDataKey();
+
+            if (isset($this->data[$dataKey])) {
+                $column->setValue($this->data[$dataKey]);
+            }
+
+            $columnName = $column->getColumnName();
+
+            $this->model->{$columnName} = $column->handle($this->data);
+        }
+
+        $this->model->saveOrFail();
+
+        return $this->model;
     }
 }

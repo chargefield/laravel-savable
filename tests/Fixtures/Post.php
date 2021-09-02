@@ -2,7 +2,6 @@
 
 namespace Chargefield\Supermodel\Tests\Fixtures;
 
-use Chargefield\Supermodel\Contracts\SavableInterface;
 use Chargefield\Supermodel\Fields\BooleanField;
 use Chargefield\Supermodel\Fields\DatetimeField;
 use Chargefield\Supermodel\Fields\ImageField;
@@ -12,7 +11,7 @@ use Chargefield\Supermodel\Fields\StringField;
 use Chargefield\Supermodel\Traits\Savable;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model implements SavableInterface
+class Post extends Model
 {
     use Savable;
 
