@@ -50,36 +50,17 @@ class PostController
     }
 }
 ```
-**Setting data:**
-```php
-$post = Post::make()->savable()->data([...])->columns([...])->save();
-```
-**Setting data from request:**
-```php
-$post = Post::make()->savable()->fromRequest()->columns([...])->save();
-```
-**Setting data from a given request**
-```php
-$post = Post::make()->savable()->fromRequest(request())->columns([...])->save();
-```
 
-### Validation
-**Validating before saving** *(throws Illuminate\Validation\ValidationException)*
+### Savable Columns
+**Setting columns:**
 ```php
-$post = Post::make()->savable()->data([...])->columns([...])->validate()->save();
+$post = Post::make()->savable()->data([...])->columns([
+    StringField::make('title'),
+    SlugField::make('slug')->fromField('title'),
+    StringField::make('body'),
+])->save();
 ```
-**Validating without throwing an exception**
-```php
-Post::make()->savable()->data([...])->columns([...])->hasErrors(); // return bool
-```
-or
-```php
-Post::make()->savable()->data([...])->columns([...])->getErrors(); // return Illuminate\Support\MessageBag
-```
-**NOTE:** *[Fields](https://github.com/chargefield/supermodels#fields) must set `rules([...])` in order to validate their data.*
-
-### Savable Trait
-Alternatively, you can define savable columns in a model.
+**Alternatively, you can set savable columns in a model:**
 ```php
 namespace App\Models;
 
@@ -116,6 +97,35 @@ class Post extends Model
 ```
 **NOTE:** *`savableColumns()` will get overridden by `columns([...])`*<br />
 i.e. `Post::make()->savable()->data([...])->columns([...])->save();`
+
+### Savable Data
+**Setting data:**
+```php
+$post = Post::make()->savable()->data([...])->columns([...])->save();
+```
+**Setting data from request:**
+```php
+$post = Post::make()->savable()->fromRequest()->columns([...])->save();
+```
+**Setting data from a given request**
+```php
+$post = Post::make()->savable()->fromRequest(request())->columns([...])->save();
+```
+
+### Validation
+**Validating before saving** *(throws Illuminate\Validation\ValidationException)*
+```php
+$post = Post::make()->savable()->data([...])->columns([...])->validate()->save();
+```
+**Validating without throwing an exception**
+```php
+Post::make()->savable()->data([...])->columns([...])->hasErrors(); // return bool
+```
+or
+```php
+Post::make()->savable()->data([...])->columns([...])->getErrors(); // return Illuminate\Support\MessageBag
+```
+**NOTE:** *[Fields](https://github.com/chargefield/supermodels#fields) must set `rules([...])` in order to validate their data.*
 
 ## Fields
 
