@@ -122,7 +122,7 @@ JsonField::make('options')->pretty()->depth(512);
 ```php
 DatetimeField::make('published_at');
 ```
-Additionally, All fields include the following methods:
+**Additionally, All fields include the following methods:**
 
 *Sets the column name and default value*
 ```php
