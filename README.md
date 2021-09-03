@@ -46,9 +46,17 @@ setting data from a given request
 ```php
 $post = Post::make()->savable()->fromRequest(request())->columns([...])->save();
 ```
-with validation (if validation fails, it will throw Illuminate\Validation\ValidationException by default)
+with validation (throws Illuminate\Validation\ValidationException)
 ```php
 $post = Post::make()->savable()->data([...])->columns([...])->validate()->save();
+```
+or
+```php
+Post::make()->savable()->data([...])->columns([...])->hasErrors(); // return bool
+```
+or
+```php
+Post::make()->savable()->data([...])->columns([...])->getErrors(); // return Illuminate\Support\MessageBag
 ```
 
 Alternatively, you can define savable columns in a model.

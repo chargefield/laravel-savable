@@ -254,7 +254,7 @@ class SavableTraitTest extends TestCase
             }
         };
 
-        $savable = $class->savable($data)->validate(false);
+        $savable = $class->savable($data);
 
         $this->assertTrue($savable->hasErrors());
         $this->assertCount(2, $savable->getErrors());
@@ -280,7 +280,7 @@ class SavableTraitTest extends TestCase
             }
         };
 
-        $savable = $class->savable($data)->validate(false);
+        $savable = $class->savable($data);
 
         $this->assertTrue($savable->hasErrors());
         $this->assertCount(3, $savable->getErrors());

@@ -83,18 +83,25 @@ class SavableModel
     }
 
     /**
-     * @param bool $throwsException
+     * @return Validator
+     */
+    protected function validator(): Validator
+    {
+        if (! ($this->validator instanceof Validator)) {
+            $this->validator = ValidatorFacade::make($this->data, $this->getRules());
+        }
+
+        return $this->validator;
+    }
+
+    /**
      * @return $this
      *
      * @throws ValidationException
      */
-    public function validate(bool $throwsException = true): self
+    public function validate(): self
     {
-        $this->validator = ValidatorFacade::make($this->data, $this->getRules());
-
-        if ($throwsException) {
-            $this->validator->validate();
-        }
+        $this->validator()->validate();
 
         return $this;
     }
@@ -117,11 +124,7 @@ class SavableModel
      */
     public function hasErrors(): bool
     {
-        if ($this->validator instanceof Validator) {
-            return $this->validator->fails();
-        }
-
-        return false;
+        return $this->validator()->fails();
     }
 
     /**
@@ -129,11 +132,7 @@ class SavableModel
      */
     public function getErrors(): MessageBag
     {
-        if ($this->validator instanceof Validator) {
-            return $this->validator->errors();
-        }
-
-        return new MessageBag();
+        return $this->validator()->errors();
     }
 
     /**
