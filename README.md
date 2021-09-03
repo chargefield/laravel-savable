@@ -97,32 +97,32 @@ class Post extends Model
 *`savableColumns()`will get overridden by defining columns:*<br />
 `Post::make()->savable()->data([...])->columns([...])->save();`
 
-### Fields
-**String Field:**
+## Fields
+###String Field:
 ```php
 StringField::make('title');
 ```
-**Slug Field:**
+###Slug Field:
 ```php
 SlugField::make('slug')->fromField('title')->separateBy('-');
 ```
-**File Field:**
+###File Field:
 ```php
 FileField::make('image')->disk('local')->path('images')->withOriginalName();
 ```
-**Boolean Field:**
+###Boolean Field:
 ```php
 BooleanField::make('is_featured');
 ```
-**Json Field:**
+###Json Field:
 ```php
 JsonField::make('options')->pretty()->depth(512);
 ```
-**Datetime Field:**
+###Datetime Field:
 ```php
 DatetimeField::make('published_at');
 ```
-**Additionally, All fields include the following methods:**
+###Additionally, All fields include the following methods:
 
 *Sets the column name and default value*
 ```php
@@ -158,19 +158,19 @@ StringField::make('title')->transform(function ($fieldName, $fieldValue, $fields
 });
 ```
 
-### Testing
+## Testing
 You can run the tests with:
 ```bash
 vendor/bin/phpunit
 ```
 
-### Changelog
+## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 ## Contributing
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+## Security
 If you discover any security related issues, please email support@chargefield.com instead of using the issue tracker.
 
 ## Credits
