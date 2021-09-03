@@ -72,6 +72,23 @@ class ImageFieldTest extends TestCase
     }
 
     /** @test */
+    public function it_can_store_image_with_original_name_to_given_path()
+    {
+        Storage::fake();
+
+        $path = 'path/to/uploads';
+        $imageName = 'example.png';
+        $value = UploadedFile::fake()->image($imageName);
+        $field = ImageField::make('image');
+        $field->withOriginalName();
+        $field->setPath($path);
+        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertEquals("{$path}/{$imageName}", $field->handle());
+
+        Storage::assertExists("{$path}/{$imageName}");
+    }
+
+    /** @test */
     public function it_returns_null_when_value_is_not_set()
     {
         Storage::fake();

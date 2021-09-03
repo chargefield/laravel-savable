@@ -33,6 +33,17 @@ class ImageField extends Field
     }
 
     /**
+     * @param string $path
+     * @return $this
+     */
+    public function setPath(string $path): self
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
      * @param string $disk
      * @return $this
      */
