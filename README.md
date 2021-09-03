@@ -153,7 +153,7 @@ StringField::make('user_id')->rules([
 ```
 *Sets a computed closure to transform the value*
 ```php
-StringField::make('title')->transform(function ($fieldName, $fieldValue, ...$fieldsData) {
+StringField::make('title')->transform(function ($fieldName, $fieldValue, $fieldsData) {
     return Str::title($fieldValue);
 });
 ```
