@@ -116,7 +116,7 @@ DatetimeField::make('published_at');
 ```
 Additionally, All fields include the following methods:
 
-*Sets the default value*
+*Sets the column name and default value*
 ```php
 StringField::make('title', 'Default Title');
 ```
