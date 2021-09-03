@@ -97,8 +97,7 @@ class Post extends Model
     }
 }
 ```
-**NOTE:** *`savableColumns()` will get overridden by `columns([...])`*<br />
-i.e. `Post::make()->savable()->data([...])->columns([...])->save();`
+**NOTE:** *`savableColumns()` will get overridden by `columns([...])`*
 
 ### Savable Data
 **Setting data:**
