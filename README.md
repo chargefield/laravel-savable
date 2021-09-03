@@ -40,7 +40,8 @@ with validation (if validation fails, it will throw a Illuminate\Validation\Vali
 $post = Post::make()->savable([...])->columns([...])->validate()->save();
 ```
 
-Alternatively, you can define savable columns in a model. This will get overridden by defining columns: `Post::make()->savable([...])->columns([...])->save();` 
+Alternatively, you can define savable columns in a model. This will get overridden by defining columns: `Post::make()->savable([...])->columns([...])->save();`
+
 ```php
 namespace App\Models;
 
@@ -48,7 +49,7 @@ use Illuminate\Database\Eloquent\Model;
 use Chargefield\Supermodel\Traits\Savable;
 use Chargefield\Supermodel\Fields\JsonField;
 use Chargefield\Supermodel\Fields\SlugField;
-use Chargefield\Supermodel\Fields\ImageField;
+use Chargefield\Supermodel\Fields\FileField;
 use Chargefield\Supermodel\Fields\StringField;
 use Chargefield\Supermodel\Fields\BooleanField;
 use Chargefield\Supermodel\Fields\DatetimeField;
@@ -63,7 +64,7 @@ class Post extends Model
             StringField::make('title')->setRules('required|string'),
             SlugField::make('slug')->fromField('title'),
             StringField::make('body')->setRules('required|string'),
-            ImageField::make('image')->nullable()->setRules('nullable|image')->disk('public')->withOriginalName(),
+            FileField::make('image')->nullable()->setRules('nullable|image')->disk('public')->setPath('path/to/uploads')->withOriginalName(),
             BooleanField::make('is_featured')->setRules('required|boolean'),
             JsonField::make('options')->nullable(),
             DatetimeField::make('published_at')->nullable(),

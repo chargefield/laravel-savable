@@ -4,18 +4,18 @@ namespace Chargefield\Supermodel\Tests\Feature;
 
 use Chargefield\Supermodel\Exceptions\InvalidImageFileException;
 use Chargefield\Supermodel\Fields\Field;
-use Chargefield\Supermodel\Fields\ImageField;
+use Chargefield\Supermodel\Fields\FileField;
 use Chargefield\Supermodel\Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 
-class ImageFieldTest extends TestCase
+class FileFieldTest extends TestCase
 {
     /** @test */
     public function it_can_make_a_new_string_field_instance()
     {
-        $this->assertInstanceOf(ImageField::class, ImageField::make('image'));
+        $this->assertInstanceOf(FileField::class, FileField::make('image'));
     }
 
     /** @test */
@@ -26,7 +26,7 @@ class ImageFieldTest extends TestCase
         $path = 'images';
         $imageName = 'example.png';
         $value = UploadedFile::fake()->image($imageName);
-        $field = ImageField::make('image');
+        $field = FileField::make('image');
         $this->assertInstanceOf(Field::class, $field->setValue($value));
         $this->assertEquals("{$path}/{$value->hashName()}", $field->handle());
 
@@ -41,7 +41,7 @@ class ImageFieldTest extends TestCase
         $path = 'images';
         $imageName = 'example.png';
         $value = UploadedFile::fake()->image($imageName);
-        $field = ImageField::make('image');
+        $field = FileField::make('image');
         $field->withOriginalName();
         $this->assertInstanceOf(Field::class, $field->setValue($value));
         $this->assertEquals("{$path}/{$imageName}", $field->handle());
@@ -62,7 +62,7 @@ class ImageFieldTest extends TestCase
         $path = 'images';
         $imageName = 'example.png';
         $value = UploadedFile::fake()->image($imageName);
-        $field = ImageField::make('image');
+        $field = FileField::make('image');
         $field->withOriginalName();
         $field->disk($disk);
         $this->assertInstanceOf(Field::class, $field->setValue($value));
@@ -79,7 +79,7 @@ class ImageFieldTest extends TestCase
         $path = 'path/to/uploads';
         $imageName = 'example.png';
         $value = UploadedFile::fake()->image($imageName);
-        $field = ImageField::make('image');
+        $field = FileField::make('image');
         $field->withOriginalName();
         $field->setPath($path);
         $this->assertInstanceOf(Field::class, $field->setValue($value));
@@ -93,7 +93,7 @@ class ImageFieldTest extends TestCase
     {
         Storage::fake();
 
-        $field = ImageField::make('image')->nullable();
+        $field = FileField::make('image')->nullable();
         $this->assertNull($field->handle());
     }
 
@@ -102,7 +102,7 @@ class ImageFieldTest extends TestCase
     {
         Storage::fake();
 
-        $field = ImageField::make('image')->setValue('not-a-valid-file-object');
+        $field = FileField::make('image')->setValue('not-a-valid-file-object');
         $this->expectException(InvalidImageFileException::class);
         $field->handle();
     }

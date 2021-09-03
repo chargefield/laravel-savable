@@ -5,7 +5,7 @@ namespace Chargefield\Supermodel\Fields;
 use Chargefield\Supermodel\Exceptions\InvalidImageFileException;
 use Illuminate\Http\UploadedFile;
 
-class ImageField extends Field
+class FileField extends Field
 {
     /**
      * @var string

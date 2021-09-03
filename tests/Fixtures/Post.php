@@ -4,7 +4,7 @@ namespace Chargefield\Supermodel\Tests\Fixtures;
 
 use Chargefield\Supermodel\Fields\BooleanField;
 use Chargefield\Supermodel\Fields\DatetimeField;
-use Chargefield\Supermodel\Fields\ImageField;
+use Chargefield\Supermodel\Fields\FileField;
 use Chargefield\Supermodel\Fields\JsonField;
 use Chargefield\Supermodel\Fields\SlugField;
 use Chargefield\Supermodel\Fields\StringField;
@@ -33,7 +33,7 @@ class Post extends Model
             StringField::make('title'),
             SlugField::make('slug')->fromField('title'),
             StringField::make('body'),
-            ImageField::make('image')->nullable(),
+            FileField::make('image')->nullable(),
             BooleanField::make('is_featured'),
             JsonField::make('options')->nullable(),
             DatetimeField::make('published_at')->nullable(),
