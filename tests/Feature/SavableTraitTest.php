@@ -260,7 +260,7 @@ class SavableTraitTest extends TestCase
             }
         };
 
-        $savable = $class->savable($data)->validate( false);
+        $savable = $class->savable($data)->validate(false);
 
         $this->assertFalse($savable->hasValidationErrors());
         $this->assertCount(0, $savable->getValidationErrors());
@@ -291,7 +291,8 @@ class SavableTraitTest extends TestCase
     /** @test */
     public function it_throws_an_exception_if_model_is_not_savable()
     {
-        $class = new class extends Model {};
+        $class = new class extends Model {
+        };
 
         $this->expectException(NotSavableException::class);
 

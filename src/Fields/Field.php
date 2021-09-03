@@ -148,7 +148,7 @@ abstract class Field
      */
     public function hasRules(): bool
     {
-        return !empty($this->rules);
+        return ! empty($this->rules);
     }
 
     /**

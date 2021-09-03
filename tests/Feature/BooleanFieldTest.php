@@ -2,8 +2,8 @@
 
 namespace Chargefield\Supermodel\Tests\Feature;
 
-use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Fields\BooleanField;
+use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Tests\TestCase;
 
 class BooleanFieldTest extends TestCase

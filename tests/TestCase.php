@@ -24,11 +24,13 @@ class TestCase extends BaseTestCase
     {
         Route::post('/posts', function (Request $request) {
             Post::make()->savable($request->all())->validate()->save();
+
             return response([], 200);
         })->name('posts.store');
 
         Route::patch('/posts/{id}', function (Request $request, $id) {
             Post::make($id)->savable($request->all())->validate()->save();
+
             return response([], 200);
         })->name('posts.update');
     }

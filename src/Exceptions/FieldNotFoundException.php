@@ -2,8 +2,8 @@
 
 namespace Chargefield\Supermodel\Exceptions;
 
-use Exception;
 use Chargefield\Supermodel\Fields\Field;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 class FieldNotFoundException extends Exception

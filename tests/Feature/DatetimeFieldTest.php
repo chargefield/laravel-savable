@@ -3,8 +3,8 @@
 namespace Chargefield\Supermodel\Tests\Feature;
 
 use Carbon\Exceptions\InvalidFormatException;
-use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Fields\DatetimeField;
+use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Tests\TestCase;
 use Illuminate\Support\Carbon;
 
