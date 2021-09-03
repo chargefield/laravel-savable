@@ -98,31 +98,31 @@ class Post extends Model
 `Post::make()->savable()->data([...])->columns([...])->save();`
 
 ## Fields
-###String Field:
+### String Field:
 ```php
 StringField::make('title');
 ```
-###Slug Field:
+### Slug Field:
 ```php
 SlugField::make('slug')->fromField('title')->separateBy('-');
 ```
-###File Field:
+### File Field:
 ```php
 FileField::make('image')->disk('local')->path('images')->withOriginalName();
 ```
-###Boolean Field:
+### Boolean Field:
 ```php
 BooleanField::make('is_featured');
 ```
-###Json Field:
+### Json Field:
 ```php
 JsonField::make('options')->pretty()->depth(512);
 ```
-###Datetime Field:
+### Datetime Field:
 ```php
 DatetimeField::make('published_at');
 ```
-###Additionally, All fields include the following methods:
+### Additionally, All fields include the following methods:
 
 *Sets the column name and default value*
 ```php
