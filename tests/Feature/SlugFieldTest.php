@@ -19,7 +19,7 @@ class SlugFieldTest extends TestCase
     {
         $value = 'Example Text';
         $field = SlugField::make('slug');
-        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertInstanceOf(Field::class, $field->value($value));
         $this->assertEquals('example-text', $field->handle());
     }
 
@@ -29,7 +29,7 @@ class SlugFieldTest extends TestCase
         $value = 'Example Text';
         $field = SlugField::make('slug');
         $field->separateBy('_');
-        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertInstanceOf(Field::class, $field->value($value));
         $this->assertEquals('example_text', $field->handle());
     }
 
@@ -52,7 +52,7 @@ class SlugFieldTest extends TestCase
             'title' => 'Example Text',
         ];
         $value = 'example-text';
-        $field = SlugField::make('slug')->setValue($fields['title']);
+        $field = SlugField::make('slug')->value($fields['title']);
         $this->assertInstanceOf(Field::class, $field->fromField('body'));
         $this->assertEquals($value, $field->handle($fields));
     }

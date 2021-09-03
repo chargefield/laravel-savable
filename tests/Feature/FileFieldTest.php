@@ -27,7 +27,7 @@ class FileFieldTest extends TestCase
         $imageName = 'example.png';
         $value = UploadedFile::fake()->image($imageName);
         $field = FileField::make('image');
-        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertInstanceOf(Field::class, $field->value($value));
         $this->assertEquals("{$path}/{$value->hashName()}", $field->handle());
 
         Storage::assertExists("{$path}/{$value->hashName()}");
@@ -43,7 +43,7 @@ class FileFieldTest extends TestCase
         $value = UploadedFile::fake()->image($imageName);
         $field = FileField::make('image');
         $field->withOriginalName();
-        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertInstanceOf(Field::class, $field->value($value));
         $this->assertEquals("{$path}/{$imageName}", $field->handle());
 
         Storage::assertExists("{$path}/{$imageName}");
@@ -65,7 +65,7 @@ class FileFieldTest extends TestCase
         $field = FileField::make('image');
         $field->withOriginalName();
         $field->disk($disk);
-        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertInstanceOf(Field::class, $field->value($value));
         $this->assertEquals("{$path}/{$imageName}", $field->handle());
 
         Storage::disk($disk)->assertExists("{$path}/{$imageName}");
@@ -81,8 +81,8 @@ class FileFieldTest extends TestCase
         $value = UploadedFile::fake()->image($imageName);
         $field = FileField::make('image');
         $field->withOriginalName();
-        $field->setPath($path);
-        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $field->path($path);
+        $this->assertInstanceOf(Field::class, $field->value($value));
         $this->assertEquals("{$path}/{$imageName}", $field->handle());
 
         Storage::assertExists("{$path}/{$imageName}");
@@ -102,7 +102,7 @@ class FileFieldTest extends TestCase
     {
         Storage::fake();
 
-        $field = FileField::make('image')->setValue('not-a-valid-file-object');
+        $field = FileField::make('image')->value('not-a-valid-file-object');
         $this->expectException(InvalidImageFileException::class);
         $field->handle();
     }

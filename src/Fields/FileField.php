@@ -36,7 +36,7 @@ class FileField extends Field
      * @param string $path
      * @return $this
      */
-    public function setPath(string $path): self
+    public function path(string $path): self
     {
         $this->path = $path;
 
@@ -56,26 +56,38 @@ class FileField extends Field
 
     /**
      * @param array $fields
-     * @return string
+     * @return string|null
+     *
+     * @throws InvalidImageFileException
      */
     public function handle(array $fields = [])
     {
-        $file = parent::handle($fields);
-
-        if (is_null($file)) {
-            return null;
-        }
+        $file = $this->value;
 
         if (! ($file instanceof UploadedFile)) {
+            if ($this->nullable) {
+                return null;
+            }
+
             throw new InvalidImageFileException($file);
         }
 
-        $disk = $this->disk ?? config('filesystems.default');
-
         if ($this->withOriginalName) {
-            return $file->storeAs($this->path, $file->getClientOriginalName(), ['disk' => $disk]);
+            return $file->storeAs($this->path, $file->getClientOriginalName(), $this->getOptions());
         }
 
-        return $file->store($this->path, ['disk' => $disk]);
+        return $file->store($this->path, $this->getOptions());
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'disk' => $this->getDisk(),
+        ];
+    }
+
+    protected function getDisk(): string
+    {
+        return $this->disk ?? config('filesystems.default');
     }
 }

@@ -14,14 +14,12 @@ class DatetimeField extends Field
      */
     public function handle(array $fields = [])
     {
-        $value = parent::handle($fields);
-
-        if (is_null($value)) {
+        if (empty($this->value)) {
             return null;
         }
 
         try {
-            return Carbon::parse($value);
+            return Carbon::parse($this->value);
         } catch (InvalidFormatException $e) {
             if ($this->nullable) {
                 return null;

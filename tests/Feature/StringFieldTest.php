@@ -19,7 +19,7 @@ class StringFieldTest extends TestCase
     {
         $value = 'Example Text';
         $field = StringField::make('title');
-        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertInstanceOf(Field::class, $field->value($value));
         $this->assertEquals($value, $field->handle());
     }
 
@@ -27,6 +27,20 @@ class StringFieldTest extends TestCase
     public function it_returns_null_when_value_is_not_set()
     {
         $field = StringField::make('title');
+        $this->assertNull($field->handle());
+    }
+
+    /** @test */
+    public function it_returns_empty_string_when_value_is_set_to_empty_string()
+    {
+        $field = StringField::make('title')->value('');
+        $this->assertEmpty($field->handle());
+    }
+
+    /** @test */
+    public function it_returns_null_when_value_is_set_to_empty_string()
+    {
+        $field = StringField::make('title')->value('')->nullable();
         $this->assertNull($field->handle());
     }
 }

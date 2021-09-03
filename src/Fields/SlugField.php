@@ -40,11 +40,11 @@ class SlugField extends Field
 
     /**
      * @param array $fields
-     * @return mixed|string|null
+     * @return string|null
      */
     public function handle(array $fields = [])
     {
-        $value = parent::handle($fields);
+        $value = $this->value;
 
         if (! empty($this->fromField) && isset($fields[$this->fromField])) {
             $value = $fields[$this->fromField];
@@ -54,7 +54,7 @@ class SlugField extends Field
             $value = null;
         }
 
-        if (is_null($value) && $this->nullable) {
+        if (empty($value) && $this->nullable) {
             return null;
         }
 

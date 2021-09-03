@@ -18,7 +18,7 @@ class BooleanFieldTest extends TestCase
     public function it_can_set_and_get_true_from_the_boolean_value()
     {
         $field = BooleanField::make('is_testing');
-        $this->assertInstanceOf(Field::class, $field->setValue(true));
+        $this->assertInstanceOf(Field::class, $field->value(true));
         $this->assertTrue($field->handle());
     }
 
@@ -26,7 +26,7 @@ class BooleanFieldTest extends TestCase
     public function it_can_set_and_get_true_from_the_string_boolean_value()
     {
         $field = BooleanField::make('is_testing');
-        $this->assertInstanceOf(Field::class, $field->setValue('true'));
+        $this->assertInstanceOf(Field::class, $field->value('true'));
         $this->assertTrue($field->handle());
     }
 
@@ -34,7 +34,7 @@ class BooleanFieldTest extends TestCase
     public function it_can_set_and_get_true_from_the_integer_boolean_value()
     {
         $field = BooleanField::make('is_testing');
-        $this->assertInstanceOf(Field::class, $field->setValue('1'));
+        $this->assertInstanceOf(Field::class, $field->value('1'));
         $this->assertTrue($field->handle());
     }
 
@@ -42,7 +42,7 @@ class BooleanFieldTest extends TestCase
     public function it_can_set_and_get_false_from_the_boolean_value()
     {
         $field = BooleanField::make('is_testing');
-        $this->assertInstanceOf(Field::class, $field->setValue(false));
+        $this->assertInstanceOf(Field::class, $field->value(false));
         $this->assertFalse($field->handle());
     }
 
@@ -50,7 +50,7 @@ class BooleanFieldTest extends TestCase
     public function it_can_set_and_get_false_from_the_string_boolean_value()
     {
         $field = BooleanField::make('is_testing');
-        $this->assertInstanceOf(Field::class, $field->setValue('false'));
+        $this->assertInstanceOf(Field::class, $field->value('false'));
         $this->assertFalse($field->handle());
     }
 
@@ -58,7 +58,7 @@ class BooleanFieldTest extends TestCase
     public function it_can_set_and_get_false_from_the_integer_boolean_value()
     {
         $field = BooleanField::make('is_testing');
-        $this->assertInstanceOf(Field::class, $field->setValue('0'));
+        $this->assertInstanceOf(Field::class, $field->value('0'));
         $this->assertFalse($field->handle());
     }
 
@@ -72,7 +72,21 @@ class BooleanFieldTest extends TestCase
     /** @test */
     public function it_returns_null_when_value_is_not_set_and_allow_null()
     {
-        $field = BooleanField::make('is_testing')->setValue('not-a-boolean')->nullable();
+        $field = BooleanField::make('is_testing')->value('not-a-boolean')->nullable();
+        $this->assertNull($field->handle());
+    }
+
+    /** @test */
+    public function it_returns_null_when_value_is_null_and_set_to_nullable()
+    {
+        $field = BooleanField::make('is_testing')->value(null)->nullable();
+        $this->assertNull($field->handle());
+    }
+
+    /** @test */
+    public function it_returns_null_when_value_is_empty_and_set_to_nullable()
+    {
+        $field = BooleanField::make('is_testing')->value('')->nullable();
         $this->assertNull($field->handle());
     }
 }

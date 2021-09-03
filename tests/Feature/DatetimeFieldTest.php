@@ -21,7 +21,7 @@ class DatetimeFieldTest extends TestCase
     {
         $value = 'January 4th, 1984';
         $field = DatetimeField::make('created_at');
-        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertInstanceOf(Field::class, $field->value($value));
         $this->assertInstanceOf(Carbon::class, $field->handle());
         $this->assertEquals(Carbon::parse($value)->toDateTimeString(), $field->handle()->toDateTimeString());
     }
@@ -31,7 +31,7 @@ class DatetimeFieldTest extends TestCase
     {
         $value = 'Not A Date Or Time';
         $field = DatetimeField::make('created_at');
-        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertInstanceOf(Field::class, $field->value($value));
         $this->expectException(InvalidFormatException::class);
         $field->handle();
     }
@@ -40,7 +40,7 @@ class DatetimeFieldTest extends TestCase
     public function it_returns_null_when_value_cannot_be_parsed_into_carbon_instance_and_allow_null()
     {
         $value = 'Not A Date Or Time';
-        $field = DatetimeField::make('created_at')->setValue($value)->nullable();
+        $field = DatetimeField::make('created_at')->value($value)->nullable();
         $this->assertNull($field->handle());
     }
 

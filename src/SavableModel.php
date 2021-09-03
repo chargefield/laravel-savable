@@ -9,6 +9,7 @@ use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Traits\Savable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
@@ -45,7 +46,7 @@ class SavableModel
         }
 
         $this->model = $model;
-        $this->set($data);
+        $this->data($data);
     }
 
     /**
@@ -63,7 +64,7 @@ class SavableModel
      * @param array $data
      * @return $this
      */
-    public function set(array $data): self
+    public function data(array $data): self
     {
         $this->data = $data;
 
@@ -89,7 +90,7 @@ class SavableModel
      */
     public function validate(bool $throwsException = true): self
     {
-        $this->validator = ValidatorFacade::make($this->data, $this->getValidationRules());
+        $this->validator = ValidatorFacade::make($this->data, $this->getRules());
 
         if ($throwsException) {
             $this->validator->validate();
@@ -99,9 +100,22 @@ class SavableModel
     }
 
     /**
+     * @param Request|null $request
+     * @return $this
+     */
+    public function fromRequest(?Request $request = null): self
+    {
+        $request = $request ?? request();
+
+        $this->data($request->all());
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
-    public function hasValidationErrors(): bool
+    public function hasErrors(): bool
     {
         if ($this->validator instanceof Validator) {
             return $this->validator->fails();
@@ -113,7 +127,7 @@ class SavableModel
     /**
      * @return MessageBag
      */
-    public function getValidationErrors(): MessageBag
+    public function getErrors(): MessageBag
     {
         if ($this->validator instanceof Validator) {
             return $this->validator->errors();
@@ -133,13 +147,13 @@ class SavableModel
     /**
      * @return array
      */
-    public function getValidationRules(): array
+    public function getRules(): array
     {
         if (is_null($this->rules)) {
             $this->rules = collect($this->getColumns())
                 ->whereInstanceOf(Field::class)
                 ->mapWithKeys(function (Field $field) {
-                    return [$field->getDataKey() => $field->getRules()];
+                    return [$field->getFieldName() => $field->getRules()];
                 })
                 ->filter()
                 ->toArray();
@@ -157,7 +171,7 @@ class SavableModel
      */
     public function save(): ?Model
     {
-        if ($this->hasValidationErrors()) {
+        if ($this->hasErrors()) {
             return null;
         }
 
@@ -176,10 +190,10 @@ class SavableModel
                 throw new FieldNotFoundException($this->model, $column);
             }
 
-            $dataKey = $column->getDataKey();
+            $dataKey = $column->getFieldName();
 
             if (isset($this->data[$dataKey])) {
-                $column->setValue($this->data[$dataKey]);
+                $column->value($this->data[$dataKey]);
             }
 
             $columnName = $column->getColumnName();

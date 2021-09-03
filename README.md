@@ -14,7 +14,6 @@ composer require chargefield/supermodels
 
 ## Usage
 A simple example for storing a record from a controller.
-
 ```php
 namespace App\Http\Controllers;
 
@@ -35,13 +34,24 @@ class PostController
     }
 }
 ```
-with validation (if validation fails, it will throw a Illuminate\Validation\ValidationException by default)
+setting data
 ```php
-$post = Post::make()->savable([...])->columns([...])->validate()->save();
+$post = Post::make()->savable()->data([...])->columns([...])->save();
+```
+setting data from request
+```php
+$post = Post::make()->savable()->fromRequest()->columns([...])->save();
+```
+setting data from a given request
+```php
+$post = Post::make()->savable()->fromRequest(request())->columns([...])->save();
+```
+with validation (if validation fails, it will throw Illuminate\Validation\ValidationException by default)
+```php
+$post = Post::make()->savable()->data([...])->columns([...])->validate()->save();
 ```
 
-Alternatively, you can define savable columns in a model. This will get overridden by defining columns: `Post::make()->savable([...])->columns([...])->save();`
-
+Alternatively, you can define savable columns in a model.
 ```php
 namespace App\Models;
 
@@ -65,17 +75,19 @@ class Post extends Model
     public function savableColumns(): array
     {
         return [
-            StringField::make('title')->setRules('required|string'),
+            StringField::make('title')->rules('required|string'),
             SlugField::make('slug')->fromField('title')->separateBy('-'),
-            StringField::make('body')->setRules('required|string'),
-            FileField::make('image')->nullable()->setRules('nullable|image')->disk('public')->setPath('path/to/uploads')->withOriginalName(),
-            BooleanField::make('is_featured')->setRules('required|boolean'),
+            StringField::make('body')->rules('required|string'),
+            FileField::make('image')->nullable()->rules('nullable|image')->disk('public')->path('path/to/uploads')->withOriginalName(),
+            BooleanField::make('is_featured')->rules('required|boolean'),
             JsonField::make('options')->nullable(),
             DatetimeField::make('published_at')->nullable(),
         ];
     }
 }
 ```
+*`savableColumns()`will get overridden by defining columns:*<br />
+`Post::make()->savable()->data([...])->columns([...])->save();`
 
 ### Testing
 You can run the tests with:

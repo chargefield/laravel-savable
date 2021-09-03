@@ -8,6 +8,6 @@ class TestField extends Field
 {
     public function handle(array $fields = [])
     {
-        return parent::handle($fields);
+        return $this->value;
     }
 }

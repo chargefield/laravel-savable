@@ -13,7 +13,9 @@ use Chargefield\Supermodel\Tests\Fixtures\TestField;
 use Chargefield\Supermodel\Tests\TestCase;
 use Chargefield\Supermodel\Traits\Savable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Request as RequestFacade;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
 
@@ -193,9 +195,9 @@ class SavableTraitTest extends TestCase
             public function savableColumns(): array
             {
                 return [
-                    TestField::make('title')->setDataKey('name'),
-                    TestField::make('slug')->setDataKey('slugged'),
-                    TestField::make('body')->setDataKey('content'),
+                    TestField::make('title')->fieldName('name'),
+                    TestField::make('slug')->fieldName('slugged'),
+                    TestField::make('body')->fieldName('content'),
                 ];
             }
         };
@@ -223,8 +225,8 @@ class SavableTraitTest extends TestCase
             public function savableColumns(): array
             {
                 return [
-                    TestField::make('title')->setRules('required|string'),
-                    TestField::make('slug')->setRules('required|string'),
+                    TestField::make('title')->rules('required|string'),
+                    TestField::make('slug')->rules('required|string'),
                 ];
             }
         };
@@ -246,16 +248,16 @@ class SavableTraitTest extends TestCase
             public function savableColumns(): array
             {
                 return [
-                    TestField::make('title')->setRules('required|string'),
-                    TestField::make('slug')->setRules('required|string'),
+                    TestField::make('title')->rules('required|string'),
+                    TestField::make('slug')->rules('required|string'),
                 ];
             }
         };
 
         $savable = $class->savable($data)->validate(false);
 
-        $this->assertTrue($savable->hasValidationErrors());
-        $this->assertCount(2, $savable->getValidationErrors());
+        $this->assertTrue($savable->hasErrors());
+        $this->assertCount(2, $savable->getErrors());
     }
 
     /** @test */
@@ -271,17 +273,17 @@ class SavableTraitTest extends TestCase
             public function savableColumns(): array
             {
                 return [
-                    TestField::make('title')->setRules('required|string'),
-                    TestField::make('slug')->setRules('required|string'),
-                    TestField::make('body')->setRules('required|string'),
+                    TestField::make('title')->rules('required|string'),
+                    TestField::make('slug')->rules('required|string'),
+                    TestField::make('body')->rules('required|string'),
                 ];
             }
         };
 
         $savable = $class->savable($data)->validate(false);
 
-        $this->assertTrue($savable->hasValidationErrors());
-        $this->assertCount(3, $savable->getValidationErrors());
+        $this->assertTrue($savable->hasErrors());
+        $this->assertCount(3, $savable->getErrors());
 
         $post = $savable->save();
 
@@ -300,15 +302,15 @@ class SavableTraitTest extends TestCase
             public function savableColumns(): array
             {
                 return [
-                    TestField::make('title')->setRules('required|string'),
+                    TestField::make('title')->rules('required|string'),
                 ];
             }
         };
 
         $savable = $class->savable($data)->validate(false);
 
-        $this->assertFalse($savable->hasValidationErrors());
-        $this->assertCount(0, $savable->getValidationErrors());
+        $this->assertFalse($savable->hasErrors());
+        $this->assertCount(0, $savable->getErrors());
     }
 
     /** @test */
@@ -322,15 +324,15 @@ class SavableTraitTest extends TestCase
             public function savableColumns(): array
             {
                 return [
-                    TestField::make('title')->setRules('required|string'),
+                    TestField::make('title')->rules('required|string'),
                 ];
             }
         };
 
         $savable = $class->savable($data)->validate();
 
-        $this->assertFalse($savable->hasValidationErrors());
-        $this->assertCount(0, $savable->getValidationErrors());
+        $this->assertFalse($savable->hasErrors());
+        $this->assertCount(0, $savable->getErrors());
     }
 
     /** @test */
@@ -349,7 +351,7 @@ class SavableTraitTest extends TestCase
     {
         $savable = new SavableModel(new Post);
 
-        $this->assertFalse($savable->hasValidationErrors());
+        $this->assertFalse($savable->hasErrors());
     }
 
     /** @test */
@@ -357,8 +359,8 @@ class SavableTraitTest extends TestCase
     {
         $savable = new SavableModel(new Post);
 
-        $this->assertInstanceOf(MessageBag::class, $savable->getValidationErrors());
-        $this->assertCount(0, $savable->getValidationErrors());
+        $this->assertInstanceOf(MessageBag::class, $savable->getErrors());
+        $this->assertCount(0, $savable->getErrors());
     }
 
     /** @test */
@@ -396,6 +398,42 @@ class SavableTraitTest extends TestCase
             'slug' => 'example-text',
             'body' => 'An example body.',
         ]);
+        $this->assertDatabaseCount('posts', 1);
+    }
+
+    /** @test */
+    public function it_saves_data_to_the_database_from_request()
+    {
+        $data = [
+            'title' => 'Example',
+            'slug' => 'example',
+            'body' => 'An example body.',
+        ];
+
+        RequestFacade::swap(new Request($data));
+
+        $post = Post::make()->savable()->fromRequest()->save();
+
+        $this->assertInstanceOf(Post::class, $post);
+        $this->assertDatabaseHas('posts', $data);
+        $this->assertDatabaseCount('posts', 1);
+    }
+
+    /** @test */
+    public function it_saves_data_to_the_database_from_a_given_request()
+    {
+        $data = [
+            'title' => 'Example',
+            'slug' => 'example',
+            'body' => 'An example body.',
+        ];
+
+        $request = new Request($data);
+
+        $post = Post::make()->savable()->fromRequest($request)->save();
+
+        $this->assertInstanceOf(Post::class, $post);
+        $this->assertDatabaseHas('posts', $data);
         $this->assertDatabaseCount('posts', 1);
     }
 }

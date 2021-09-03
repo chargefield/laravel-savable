@@ -29,7 +29,7 @@ abstract class Field
     /**
      * @var string
      */
-    protected string $dataKey;
+    protected string $fieldName;
 
     /**
      * @var mixed
@@ -39,7 +39,7 @@ abstract class Field
     public function __construct(string $column, $defaultValue = null)
     {
         $this->column = $column;
-        $this->setValue($defaultValue);
+        $this->value($defaultValue);
     }
 
     /**
@@ -56,7 +56,7 @@ abstract class Field
      * @param $value
      * @return $this
      */
-    public function setValue($value): self
+    public function value($value): self
     {
         $this->value = $value;
 
@@ -74,18 +74,18 @@ abstract class Field
     /**
      * @return string
      */
-    public function getDataKey(): string
+    public function getFieldName(): string
     {
-        return $this->dataKey ?? $this->getColumnName();
+        return $this->fieldName ?? $this->getColumnName();
     }
 
     /**
-     * @param string $key
+     * @param string $name
      * @return $this
      */
-    public function setDataKey(string $key): self
+    public function fieldName(string $name): self
     {
-        $this->dataKey = $key;
+        $this->fieldName = $name;
 
         return $this;
     }
@@ -115,10 +115,10 @@ abstract class Field
      * @param array $args
      * @return $this
      */
-    public function withComputed(array $args = []): self
+    public function transform(array $args = []): self
     {
         if ($this->computeCallback instanceof Closure) {
-            $this->setValue(($this->computeCallback)($this->getDataKey(), $this->value, ...$args));
+            $this->value(($this->computeCallback)($this->getFieldName(), $this->value, ...$args));
         }
 
         return $this;
@@ -128,7 +128,7 @@ abstract class Field
      * @param $rules
      * @return $this
      */
-    public function setRules($rules): self
+    public function rules($rules): self
     {
         $this->rules = $rules;
 
@@ -157,10 +157,6 @@ abstract class Field
      */
     public function handle(array $fields = [])
     {
-        if (is_null($this->value) && $this->nullable) {
-            return null;
-        }
-
         return $this->value;
     }
 }
