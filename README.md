@@ -66,7 +66,7 @@ class Post extends Model
     {
         return [
             StringField::make('title')->setRules('required|string'),
-            SlugField::make('slug')->fromField('title'),
+            SlugField::make('slug')->fromField('title')->separateBy('-'),
             StringField::make('body')->setRules('required|string'),
             FileField::make('image')->nullable()->setRules('nullable|image')->disk('public')->setPath('path/to/uploads')->withOriginalName(),
             BooleanField::make('is_featured')->setRules('required|boolean'),

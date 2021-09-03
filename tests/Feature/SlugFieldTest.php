@@ -17,10 +17,20 @@ class SlugFieldTest extends TestCase
     /** @test */
     public function it_can_set_and_get_the_value()
     {
-        $value = 'example-text';
+        $value = 'Example Text';
         $field = SlugField::make('slug');
         $this->assertInstanceOf(Field::class, $field->setValue($value));
-        $this->assertEquals($value, $field->handle());
+        $this->assertEquals('example-text', $field->handle());
+    }
+
+    /** @test */
+    public function it_can_use_the_given_separator()
+    {
+        $value = 'Example Text';
+        $field = SlugField::make('slug');
+        $field->separateBy('_');
+        $this->assertInstanceOf(Field::class, $field->setValue($value));
+        $this->assertEquals('example_text', $field->handle());
     }
 
     /** @test */

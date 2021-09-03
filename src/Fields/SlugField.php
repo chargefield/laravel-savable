@@ -28,6 +28,17 @@ class SlugField extends Field
     }
 
     /**
+     * @param string $separator
+     * @return $this
+     */
+    public function separateBy(string $separator): self
+    {
+        $this->separator = $separator;
+
+        return $this;
+    }
+
+    /**
      * @param array $fields
      * @return mixed|string|null
      */
