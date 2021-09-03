@@ -198,7 +198,7 @@ class SavableModel
 
             $columnName = $column->getColumnName();
 
-            $this->model->{$columnName} = $column->handle($this->data);
+            $this->model->{$columnName} = $column->compute($this->data);
         }
 
         $this->model->saveOrFail();

@@ -104,7 +104,7 @@ abstract class Field
      * @param Closure $callback
      * @return $this
      */
-    public function compute(Closure $callback): self
+    public function transform(Closure $callback): self
     {
         $this->computeCallback = $callback;
 
@@ -112,16 +112,16 @@ abstract class Field
     }
 
     /**
-     * @param array $args
-     * @return $this
+     * @param array $data
+     * @return mixed
      */
-    public function transform(array $args = []): self
+    public function compute(array $data = [])
     {
         if ($this->computeCallback instanceof Closure) {
-            $this->value(($this->computeCallback)($this->getFieldName(), $this->value, ...$args));
+            return ($this->computeCallback)($this->getFieldName(), $this->handle($data), ...$data);
         }
 
-        return $this;
+        return $this->handle($data);
     }
 
     /**

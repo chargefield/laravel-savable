@@ -76,9 +76,9 @@ class Post extends Model
     {
         return [
             StringField::make('title')->rules('required|string'),
-            SlugField::make('slug')->fromField('title')->separateBy('-'),
+            SlugField::make('slug')->fromField('title'),
             StringField::make('body')->rules('required|string'),
-            FileField::make('image')->nullable()->rules('nullable|image')->disk('public')->path('path/to/uploads')->withOriginalName(),
+            FileField::make('image')->nullable()->rules('nullable|image'),
             BooleanField::make('is_featured')->rules('required|boolean'),
             JsonField::make('options')->nullable(),
             DatetimeField::make('published_at')->nullable(),
@@ -88,6 +88,61 @@ class Post extends Model
 ```
 *`savableColumns()`will get overridden by defining columns:*<br />
 `Post::make()->savable()->data([...])->columns([...])->save();`
+
+### Fields
+**String Field:**
+```php
+StringField::make('title');
+```
+**Slug Field:**
+```php
+SlugField::make('slug')->fromField('title')->separateBy('-');
+```
+**File Field:**
+```php
+FileField::make('image')->disk('local')->path('images')->withOriginalName();
+```
+**Boolean Field:**
+```php
+BooleanField::make('is_featured');
+```
+**Json Field:**
+```php
+JsonField::make('options')->pretty()->depth(512);
+```
+**Datetime Field:**
+```php
+DatetimeField::make('published_at');
+```
+Additionally, All fields include the following methods:
+
+*Sets the default value*
+```php
+StringField::make('title', 'Default Title');
+```
+or
+```php
+StringField::make('title')->value('Default Title');
+```
+*Sets the field name if not the same as the column name*
+```php
+StringField::make('title')->fieldName('name');
+```
+*Null will be returned if value is empty/null/exception*
+```php
+StringField::make('title')->nullable();
+```
+*Sets the Laravel validation rules*
+```php
+StringField::make('title')->rules('required|string');
+```
+*Sets a computed closure to transform the value*
+```php
+StringField::make('title')->transform(function ($fieldName, $fieldValue, ...$fieldsData) {
+    // return a computed value
+    return "Prefix {$fieldValue}";
+});
+```
 
 ### Testing
 You can run the tests with:

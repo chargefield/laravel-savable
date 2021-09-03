@@ -34,30 +34,30 @@ class FieldTest extends TestCase
     public function it_can_compute_using_a_function_to_change_value()
     {
         $field = TestField::make('test')->value('Example Text');
-        $field->compute(function ($column, $value) {
+        $field->transform(function ($column, $value) {
             return "Computed {$value} on {$column}";
         });
-        $this->assertEquals('Computed Example Text on test', $field->transform()->handle());
+        $this->assertEquals('Computed Example Text on test', $field->compute());
     }
 
     /** @test */
     public function it_can_compute_using_a_function_with_prefix_data_to_change_value()
     {
         $field = TestField::make('test')->value('Example Text');
-        $field->compute(function ($column, $value, string $prefix = '', string $suffix = '') {
+        $field->transform(function ($column, $value, string $prefix = '', string $suffix = '') {
             return "{$prefix} {$value} on {$column}";
         });
-        $this->assertEquals('Prefixed Example Text on test', $field->transform(['Prefixed'])->handle());
+        $this->assertEquals('Prefixed Example Text on test', $field->compute(['Prefixed']));
     }
 
     /** @test */
     public function it_can_compute_using_a_function_with_prefix_and_suffix_data_to_change_value()
     {
         $field = TestField::make('test')->value('Example Text');
-        $field->compute(function ($column, $value, string $prefix = '', string $suffix = '') {
+        $field->transform(function ($column, $value, string $prefix = '', string $suffix = '') {
             return "{$prefix} {$value} {$suffix} on {$column}";
         });
-        $this->assertEquals('Prefixed Example Text Suffixed on test', $field->transform(['Prefixed', 'Suffixed'])->handle());
+        $this->assertEquals('Prefixed Example Text Suffixed on test', $field->compute(['Prefixed', 'Suffixed']));
     }
 
     /** @test */
