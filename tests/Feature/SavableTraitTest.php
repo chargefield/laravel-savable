@@ -100,6 +100,18 @@ class SavableTraitTest extends TestCase
     }
 
     /** @test */
+    public function it_throws_an_exception_when_savable_columns_is_not_defined()
+    {
+        $post = new class extends Model {
+            use Savable;
+        };
+
+        $this->expectException(NoColumnsToSaveException::class);
+
+        $post->savable()->save();
+    }
+
+    /** @test */
     public function it_throws_an_exception_when_savable_columns_returns_an_empty_array()
     {
         $post = new class extends Model {

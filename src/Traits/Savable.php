@@ -15,7 +15,10 @@ trait Savable
     /**
      * @return array
      */
-    abstract public function savableColumns(): array;
+    public function savableColumns(): array
+    {
+        return [];
+    }
 
     /**
      * @param mixed $model
