@@ -149,14 +149,18 @@ class SavableModel
     }
 
     /**
-     * @return Model
+     * @return Model|null
      *
      * @throws FieldNotFoundException
      * @throws NoColumnsToSaveException
      * @throws Throwable
      */
-    public function save(): Model
+    public function save(): ?Model
     {
+        if ($this->hasValidationErrors()) {
+            return null;
+        }
+
         $columns = $this->getColumns();
 
         if (empty($columns)) {

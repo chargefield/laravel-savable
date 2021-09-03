@@ -259,6 +259,37 @@ class SavableTraitTest extends TestCase
     }
 
     /** @test */
+    public function it_fails_validation_with_invalid_data_and_does_not_save()
+    {
+        $data = [
+            'title' => '',
+            'slug' => '',
+            'body' => '',
+        ];
+
+        $class = new class extends Post {
+            public function savableColumns(): array
+            {
+                return [
+                    TestField::make('title')->setRules('required|string'),
+                    TestField::make('slug')->setRules('required|string'),
+                    TestField::make('body')->setRules('required|string'),
+                ];
+            }
+        };
+
+        $savable = $class->savable($data)->validate(false);
+
+        $this->assertTrue($savable->hasValidationErrors());
+        $this->assertCount(3, $savable->getValidationErrors());
+
+        $post = $savable->save();
+
+        $this->assertNull($post);
+        $this->assertDatabaseCount('posts', 0);
+    }
+
+    /** @test */
     public function it_passes_validation_with_valid_data_and_throws_exception_is_false()
     {
         $data = [
