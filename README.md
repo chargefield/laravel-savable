@@ -132,9 +132,17 @@ StringField::make('title')->fieldName('name');
 ```php
 StringField::make('title')->nullable();
 ```
-*Sets the Laravel validation rules*
+*Sets the validation rules for the field ([Laravel validation rules](https://laravel.com/docs/8.x/validation#available-validation-rules))*
 ```php
 StringField::make('title')->rules('required|string');
+```
+or
+```php
+StringField::make('user_id')->rules([
+    'required',
+    'integer',
+    Rule::exists('users', 'id'),
+]);
 ```
 *Sets a computed closure to transform the value*
 ```php
