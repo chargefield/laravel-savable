@@ -5,6 +5,8 @@ namespace Chargefield\Supermodel\Tests\Feature;
 use Chargefield\Supermodel\Exceptions\FieldNotFoundException;
 use Chargefield\Supermodel\Exceptions\NoColumnsToSaveException;
 use Chargefield\Supermodel\Exceptions\NotSavableException;
+use Chargefield\Supermodel\Fields\SlugField;
+use Chargefield\Supermodel\Fields\StringField;
 use Chargefield\Supermodel\SavableModel;
 use Chargefield\Supermodel\Tests\Fixtures\Post;
 use Chargefield\Supermodel\Tests\Fixtures\TestField;
@@ -326,5 +328,43 @@ class SavableTraitTest extends TestCase
 
         $this->assertInstanceOf(MessageBag::class, $savable->getValidationErrors());
         $this->assertCount(0, $savable->getValidationErrors());
+    }
+
+    /** @test */
+    public function it_can_store_a_record_with_defined_columns_on_savable_model()
+    {
+        $data = [
+            'title' => 'Example Text',
+            'body' => 'An example body.',
+        ];
+
+        $class = new class extends Model {
+            protected $table = 'posts';
+
+            protected $guarded = [];
+
+            use Savable;
+
+            public function savableColumns(): array
+            {
+                return [];
+            }
+        };
+
+        $this->assertDatabaseCount('posts', 0);
+
+        $post = $class->savable($data)->columns([
+            StringField::make('title'),
+            SlugField::make('slug')->fromField('title'),
+            StringField::make('body'),
+        ])->save();
+
+        $this->assertInstanceOf(Model::class, $post);
+        $this->assertDatabaseHas('posts', [
+            'title' => 'Example Text',
+            'slug' => 'example-text',
+            'body' => 'An example body.',
+        ]);
+        $this->assertDatabaseCount('posts', 1);
     }
 }

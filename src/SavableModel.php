@@ -24,6 +24,11 @@ class SavableModel
     protected ?array $rules = null;
 
     /**
+     * @var array|null
+     */
+    protected ?array $columns = null;
+
+    /**
      * @var Validator|null
      */
     protected ?Validator $validator = null;
@@ -61,6 +66,17 @@ class SavableModel
     public function set(array $data): self
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * @param Field[] $columns
+     * @return $this
+     */
+    public function columns(array $columns): self
+    {
+        $this->columns = $columns;
 
         return $this;
     }
@@ -107,12 +123,20 @@ class SavableModel
     }
 
     /**
+     * @return Field[]
+     */
+    protected function getColumns(): array
+    {
+        return $this->columns ?? $this->model->savableColumns();
+    }
+
+    /**
      * @return array
      */
     public function getValidationRules(): array
     {
         if (is_null($this->rules)) {
-            $this->rules = collect($this->model->savableColumns())
+            $this->rules = collect($this->getColumns())
                 ->whereInstanceOf(Field::class)
                 ->mapWithKeys(function (Field $field) {
                     return [$field->getDataKey() => $field->getRules()];
@@ -133,7 +157,7 @@ class SavableModel
      */
     public function save(): Model
     {
-        $columns = $this->model->savableColumns();
+        $columns = $this->getColumns();
 
         if (empty($columns)) {
             throw new NoColumnsToSaveException($this->model);
