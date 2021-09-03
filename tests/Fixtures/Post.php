@@ -4,6 +4,7 @@ namespace Chargefield\Supermodel\Tests\Fixtures;
 
 use Chargefield\Supermodel\Fields\BooleanField;
 use Chargefield\Supermodel\Fields\DatetimeField;
+use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Fields\FileField;
 use Chargefield\Supermodel\Fields\JsonField;
 use Chargefield\Supermodel\Fields\SlugField;
@@ -27,6 +28,9 @@ class Post extends Model
         'published_at',
     ];
 
+    /**
+     * @return Field[]
+     */
     public function savableColumns(): array
     {
         return [

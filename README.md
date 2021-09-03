@@ -46,6 +46,7 @@ Alternatively, you can define savable columns in a model. This will get overridd
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Traits\Savable;
 use Chargefield\Supermodel\Fields\JsonField;
 use Chargefield\Supermodel\Fields\SlugField;
@@ -58,6 +59,9 @@ class Post extends Model
 {
     use Savable;
 
+    /**
+     * @return Field[]
+     */
     public function savableColumns(): array
     {
         return [
