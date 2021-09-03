@@ -12,6 +12,11 @@ class SlugField extends Field
     protected string $fromField;
 
     /**
+     * @var string
+     */
+    protected string $separator = '-';
+
+    /**
      * @param string $field
      * @return $this
      */
@@ -42,6 +47,6 @@ class SlugField extends Field
             return null;
         }
 
-        return Str::slug($value);
+        return Str::slug($value, $this->separator);
     }
 }
