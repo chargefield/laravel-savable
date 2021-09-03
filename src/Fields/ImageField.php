@@ -12,8 +12,14 @@ class ImageField extends Field
      */
     protected string $path = 'images';
 
+    /**
+     * @var bool
+     */
     protected bool $withOriginalName = false;
 
+    /**
+     * @var string|null
+     */
     protected ?string $disk = null;
 
     /**
