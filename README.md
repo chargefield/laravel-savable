@@ -54,11 +54,11 @@ class Post extends Model
     public function savableColumns(): array
     {
         return [
-            StringField::make('title'),
+            StringField::make('title')->setRules('required|string'),
             SlugField::make('slug')->fromField('title'),
-            StringField::make('body'),
-            ImageField::make('image')->nullable(),
-            BooleanField::make('is_featured'),
+            StringField::make('body')->setRules('required|string'),
+            ImageField::make('image')->nullable()->setRules('nullable|image')->disk('public')->withOriginalName(),
+            BooleanField::make('is_featured')->setRules('required|boolean'),
             JsonField::make('options')->nullable(),
             DatetimeField::make('published_at')->nullable(),
         ];
