@@ -13,28 +13,34 @@ composer require chargefield/supermodels
 ```
 
 ## Usage
-A simple example for storing a record.
+A simple example for storing a record from a controller.
+
 ```php
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Chargefield\Supermodel\Fields\SlugField;
+use Chargefield\Supermodel\Fields\StringField;
 use Illuminate\Http\Request;
 
 class PostController
 {
     public function store(Request $request)
     {
-        $post = Post::make()->savable($request->all())->save();
+        $post = Post::make()->savable($request->all())->columns([
+            StringField::make('title'),
+            SlugField::make('slug')->fromField('title'),
+            StringField::make('body'),
+        ])->save();
     }
 }
 ```
 with validation (if validation fails, it will throw a Illuminate\Validation\ValidationException by default)
 ```php
-$post = Post::make()->savable($request->all())->validate()->save();
+$post = Post::make()->savable([...])->columns([...])->validate()->save();
 ```
 
-### Savable Trait
-An example of how to use the Savable trait in a model.
+Alternatively, you can define savable columns in a model. This will get overridden by defining columns: `Post::make()->savable([...])->columns([...])->save();` 
 ```php
 namespace App\Models;
 
