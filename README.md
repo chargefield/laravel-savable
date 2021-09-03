@@ -154,8 +154,7 @@ StringField::make('user_id')->rules([
 *Sets a computed closure to transform the value*
 ```php
 StringField::make('title')->transform(function ($fieldName, $fieldValue, ...$fieldsData) {
-    // return a computed value
-    return "Prefix {$fieldValue}";
+    return Str::title($fieldValue);
 });
 ```
 
