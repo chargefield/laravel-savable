@@ -119,11 +119,13 @@ $post = Post::make()->savable()->data([...])->columns([...])->validate()->save()
 ```
 **Validating without throwing an exception:**
 ```php
-Post::make()->savable()->data([...])->columns([...])->hasErrors(); // return bool
+Post::make()->savable()->data([...])->columns([...])->hasErrors();
+// return bool
 ```
 or
 ```php
-Post::make()->savable()->data([...])->columns([...])->getErrors(); // return Illuminate\Support\MessageBag
+Post::make()->savable()->data([...])->columns([...])->getErrors();
+// return Illuminate\Support\MessageBag
 ```
 **NOTE:** *[Fields](https://github.com/chargefield/supermodels#fields) must set `rules([...])` in order to validate their data.*
 
