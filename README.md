@@ -8,7 +8,7 @@ Supermodels is a Laravel package that will help you organize your business logic
 
 ## Installation
 
-You can install the package via composer:
+**You can install the package via composer:**
 ```bash
 composer require chargefield/supermodels
 ```
@@ -29,7 +29,7 @@ class Post extends Model
 ```
 
 ### Example
-A simple example for storing a record from a controller.
+**A simple example for storing a record from a controller:**
 ```php
 namespace App\Http\Controllers;
 
@@ -107,17 +107,17 @@ $post = Post::make()->savable()->data([...])->columns([...])->save();
 ```php
 $post = Post::make()->savable()->fromRequest()->columns([...])->save();
 ```
-**Setting data from a given request**
+**Setting data from a given request:**
 ```php
 $post = Post::make()->savable()->fromRequest(request())->columns([...])->save();
 ```
 
 ### Validation
-**Validating before saving** *(throws Illuminate\Validation\ValidationException)*
+**Validating before saving** *(throws Illuminate\Validation\ValidationException):*
 ```php
 $post = Post::make()->savable()->data([...])->columns([...])->validate()->save();
 ```
-**Validating without throwing an exception**
+**Validating without throwing an exception:**
 ```php
 Post::make()->savable()->data([...])->columns([...])->hasErrors(); // return bool
 ```
@@ -160,7 +160,7 @@ DatetimeField::make('published_at');
 ```
 
 ### Additional Methods:
-*Sets the column name and default value*
+**Sets the column name and default value:**
 ```php
 StringField::make('title', 'Default Title');
 ```
@@ -168,15 +168,15 @@ or
 ```php
 StringField::make('title')->value('Default Title');
 ```
-*Sets the field name if not the same as the column name*
+**Sets the field name if not the same as the column name:**
 ```php
 StringField::make('title')->fieldName('name');
 ```
-*Sets the nullable flag, null will be returned if value is empty/null/exception*
+**Sets the nullable flag, null will be returned if value is empty/null/exception:**
 ```php
 StringField::make('title')->nullable();
 ```
-*Sets the validation rules for the field ([Laravel validation rules](https://laravel.com/docs/8.x/validation#available-validation-rules))*
+**Sets the validation rules for the field ([Laravel validation rules](https://laravel.com/docs/8.x/validation#available-validation-rules)):**
 ```php
 StringField::make('user_id')->rules('required|exists:users,id');
 ```
@@ -187,7 +187,7 @@ StringField::make('user_id')->rules([
     Rule::exists('users', 'id'),
 ]);
 ```
-*Sets a computed closure to transform the value*
+**Sets a computed closure to transform the value:**
 ```php
 StringField::make('title')->transform(function ($fieldName, $fieldValue, $fieldsData) {
     return Str::title($fieldValue);
@@ -196,7 +196,7 @@ StringField::make('title')->transform(function ($fieldName, $fieldValue, $fields
 
 ## Testing
 
-You can run the tests with:
+**You can run the tests with:**
 ```bash
 vendor/bin/phpunit
 ```
