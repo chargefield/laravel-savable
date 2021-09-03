@@ -128,7 +128,7 @@ StringField::make('title')->value('Default Title');
 ```php
 StringField::make('title')->fieldName('name');
 ```
-*Null will be returned if value is empty/null/exception*
+*Sets the nullable flag, null will be returned if value is empty/null/exception*
 ```php
 StringField::make('title')->nullable();
 ```
