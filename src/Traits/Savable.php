@@ -3,6 +3,7 @@
 namespace Chargefield\Supermodel\Traits;
 
 use Chargefield\Supermodel\Exceptions\NotSavableException;
+use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\SavableModel;
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
@@ -13,7 +14,7 @@ use Throwable;
 trait Savable
 {
     /**
-     * @return array
+     * @return Field[]
      */
     public function savableColumns(): array
     {
