@@ -72,6 +72,7 @@ use Chargefield\Supermodel\Fields\SlugField;
 use Chargefield\Supermodel\Fields\FileField;
 use Chargefield\Supermodel\Fields\StringField;
 use Chargefield\Supermodel\Fields\BooleanField;
+use Chargefield\Supermodel\Fields\IntegerField;
 use Chargefield\Supermodel\Fields\DatetimeField;
 
 class Post extends Model
@@ -89,6 +90,7 @@ class Post extends Model
             StringField::make('body')->rules('required|string'),
             FileField::make('image')->nullable()->rules('nullable|image'),
             BooleanField::make('is_featured')->rules('required|boolean'),
+            IntegerField::make('order')->strict()->rules('required|integer|min:1'),
             JsonField::make('options')->nullable(),
             DatetimeField::make('published_at')->nullable(),
         ];
@@ -149,6 +151,11 @@ FileField::make('image')->disk('local')->path('images')->withOriginalName();
 ### Boolean Field:
 ```php
 BooleanField::make('is_featured');
+```
+
+### Integer Field:
+```php
+IntegerField::make('age')->strict();
 ```
 
 ### Json Field:
