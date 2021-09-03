@@ -189,7 +189,7 @@ StringField::make('user_id')->rules([
     Rule::exists('users', 'id'),
 ]);
 ```
-**Sets a computed closure to transform the value:**
+**Sets a closure to transform the value:**
 ```php
 StringField::make('title')->transform(function ($fieldName, $fieldValue, $fieldsData) {
     return Str::title($fieldValue);
