@@ -3,7 +3,6 @@
 namespace Chargefield\Supermodel\Tests\Feature;
 
 use Chargefield\Supermodel\Exceptions\InvalidImageFileException;
-use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Fields\FileField;
 use Chargefield\Supermodel\Tests\TestCase;
 use Illuminate\Http\UploadedFile;
@@ -13,13 +12,13 @@ use Illuminate\Support\Facades\Storage;
 class FileFieldTest extends TestCase
 {
     /** @test */
-    public function it_can_make_a_new_string_field_instance()
+    public function it_can_make_a_new_field_instance()
     {
         $this->assertInstanceOf(FileField::class, FileField::make('image'));
     }
 
     /** @test */
-    public function it_can_set_and_get_the_value()
+    public function it_can_store_a_file_when_value_is_set_to_an_uploaded_file()
     {
         Storage::fake();
 
@@ -27,14 +26,14 @@ class FileFieldTest extends TestCase
         $imageName = 'example.png';
         $value = UploadedFile::fake()->image($imageName);
         $field = FileField::make('image');
-        $this->assertInstanceOf(Field::class, $field->value($value));
+        $field->value($value);
         $this->assertEquals("{$path}/{$value->hashName()}", $field->handle());
 
         Storage::assertExists("{$path}/{$value->hashName()}");
     }
 
     /** @test */
-    public function it_can_store_image_with_original_name_to_default_disk()
+    public function it_can_store_a_file_with_the_original_name_when_value_is_set_to_an_uploaded_file()
     {
         Storage::fake();
 
@@ -43,14 +42,14 @@ class FileFieldTest extends TestCase
         $value = UploadedFile::fake()->image($imageName);
         $field = FileField::make('image');
         $field->withOriginalName();
-        $this->assertInstanceOf(Field::class, $field->value($value));
+        $field->value($value);
         $this->assertEquals("{$path}/{$imageName}", $field->handle());
 
         Storage::assertExists("{$path}/{$imageName}");
     }
 
     /** @test */
-    public function it_can_store_image_with_original_name_to_given_disk()
+    public function it_can_store_a_file_to_a_given_disk_when_value_is_set_to_an_uploaded_file()
     {
         $disk = 'test_disk';
         Config::set("filesystems.disks.{$disk}", [
@@ -65,14 +64,14 @@ class FileFieldTest extends TestCase
         $field = FileField::make('image');
         $field->withOriginalName();
         $field->disk($disk);
-        $this->assertInstanceOf(Field::class, $field->value($value));
+        $field->value($value);
         $this->assertEquals("{$path}/{$imageName}", $field->handle());
 
         Storage::disk($disk)->assertExists("{$path}/{$imageName}");
     }
 
     /** @test */
-    public function it_can_store_image_with_original_name_to_given_path()
+    public function it_can_store_a_file_to_a_given_path_when_value_is_set_to_an_uploaded_file()
     {
         Storage::fake();
 
@@ -82,27 +81,29 @@ class FileFieldTest extends TestCase
         $field = FileField::make('image');
         $field->withOriginalName();
         $field->path($path);
-        $this->assertInstanceOf(Field::class, $field->value($value));
+        $field->value($value);
         $this->assertEquals("{$path}/{$imageName}", $field->handle());
 
         Storage::assertExists("{$path}/{$imageName}");
     }
 
     /** @test */
-    public function it_returns_null_when_value_is_not_set()
+    public function it_returns_null_when_nullable_and_value_is_not_set()
     {
         Storage::fake();
 
-        $field = FileField::make('image')->nullable();
+        $field = FileField::make('image');
+        $field->nullable();
         $this->assertNull($field->handle());
     }
 
     /** @test */
-    public function it_throws_an_exception_when_given_an_invalid_file_object()
+    public function it_throws_an_exception_when_given_an_invalid_file_value()
     {
         Storage::fake();
 
-        $field = FileField::make('image')->value('not-a-valid-file-object');
+        $field = FileField::make('image');
+        $field->value('not-a-valid-file-object');
         $this->expectException(InvalidImageFileException::class);
         $field->handle();
     }
