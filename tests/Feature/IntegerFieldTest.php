@@ -2,7 +2,6 @@
 
 namespace Chargefield\Supermodel\Tests\Feature;
 
-use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Fields\IntegerField;
 use Chargefield\Supermodel\Tests\TestCase;
 
@@ -15,26 +14,26 @@ class IntegerFieldTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_and_get_an_integer_value()
+    public function it_returns_an_integer_when_a_valid_integer_value_is_set()
     {
         $field = IntegerField::make('age');
-        $this->assertInstanceOf(Field::class, $field->value(99));
+        $field->value(99);
         $this->assertEquals(99, $field->handle());
     }
 
     /** @test */
-    public function it_can_set_and_get_an_integer_value_with_string_integer_value()
+    public function it_returns_an_integer_when_a_valid_string_value_is_set()
     {
         $field = IntegerField::make('age');
-        $this->assertInstanceOf(Field::class, $field->value('99'));
+        $field->value('99');
         $this->assertEquals(99, $field->handle());
     }
 
     /** @test */
-    public function it_can_set_and_get_an_integer_value_with_float_value()
+    public function it_returns_an_integer_when_a_valid_float_value_is_set()
     {
         $field = IntegerField::make('age');
-        $this->assertInstanceOf(Field::class, $field->value(99.5));
+        $field->value(99.5);
         $this->assertEquals(99, $field->handle());
     }
 
@@ -53,72 +52,86 @@ class IntegerFieldTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_null_when_value_is_true_and_allow_null()
+    public function it_returns_null_when_nullable_and_value_is_true()
     {
         $field = IntegerField::make('age')->value(true)->strict()->nullable();
         $this->assertNull($field->handle());
     }
 
     /** @test */
-    public function it_returns_null_when_value_is_not_set_and_allow_null()
+    public function it_returns_null_when_nullable_and_value_is_not_set()
     {
         $field = IntegerField::make('age')->nullable();
         $this->assertNull($field->handle());
     }
 
     /** @test */
-    public function it_returns_0_when_value_is_a_string()
+    public function it_returns_0_when_value_is_an_invalid_string()
     {
         $field = IntegerField::make('age')->value('not-an_integer');
         $this->assertEquals(0, $field->handle());
     }
 
     /** @test */
-    public function it_returns_0_when_value_is_a_string_and_strict_is_set()
+    public function it_returns_0_when_strict_and_value_is_an_invalid_string()
     {
-        $field = IntegerField::make('age')->value('not-an_integer')->strict();
+        $field = IntegerField::make('age');
+        $field->strict();
+        $field->value('not-an_integer');
         $this->assertEquals(0, $field->handle());
     }
 
     /** @test */
-    public function it_returns_null_when_value_is_a_string_and_allow_null()
+    public function it_returns_null_when_strict_and_nullable_and_value_is_an_invalid_string()
     {
-        $field = IntegerField::make('age')->value('not-an_integer')->strict()->nullable();
+        $field = IntegerField::make('age');
+        $field->nullable();
+        $field->strict();
+        $field->value('not-an_integer');
         $this->assertNull($field->handle());
     }
 
     /** @test */
-    public function it_returns_null_when_value_is_null_and_set_to_nullable()
+    public function it_returns_null_when_nullable_and_value_is_null()
     {
-        $field = IntegerField::make('age')->value(null)->nullable();
+        $field = IntegerField::make('age');
+        $field->nullable();
+        $field->value(null);
         $this->assertNull($field->handle());
     }
 
     /** @test */
     public function it_returns_0_when_value_is_null()
     {
-        $field = IntegerField::make('age')->value(null);
+        $field = IntegerField::make('age');
+        $field->value(null);
         $this->assertEquals(0, $field->handle());
     }
 
     /** @test */
-    public function it_returns_null_when_value_is_empty_and_set_to_nullable()
+    public function it_returns_null_when_nullable_and_value_is_an_empty_string()
     {
-        $field = IntegerField::make('age')->value('')->nullable();
+        $field = IntegerField::make('age');
+        $field->nullable();
+        $field->value('');
         $this->assertNull($field->handle());
     }
 
     /** @test */
-    public function it_returns_0_when_value_is_empty()
+    public function it_returns_0_when_value_is_an_empty_string()
     {
-        $field = IntegerField::make('age')->value('');
+        $field = IntegerField::make('age');
+        $field->value('');
         $this->assertEquals(0, $field->handle());
     }
 
     /** @test */
-    public function it_returns_0_when_value_0()
+    public function it_returns_0_when_nullable_and_strict_and_value_is_0()
     {
-        $field = IntegerField::make('age')->value(0)->strict()->nullable();
+        $field = IntegerField::make('age');
+        $field->nullable();
+        $field->strict();
+        $field->value(0);
         $this->assertEquals(0, $field->handle());
     }
 }
