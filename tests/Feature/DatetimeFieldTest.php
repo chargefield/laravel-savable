@@ -4,43 +4,45 @@ namespace Chargefield\Supermodel\Tests\Feature;
 
 use Carbon\Exceptions\InvalidFormatException;
 use Chargefield\Supermodel\Fields\DatetimeField;
-use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Tests\TestCase;
 use Illuminate\Support\Carbon;
 
 class DatetimeFieldTest extends TestCase
 {
     /** @test */
-    public function it_can_make_a_new_string_field_instance()
+    public function it_can_make_a_new_field_instance()
     {
         $this->assertInstanceOf(DatetimeField::class, DatetimeField::make('created_at'));
     }
 
     /** @test */
-    public function it_can_set_and_get_the_carbon_instance()
+    public function it_can_set_a_string_value_and_get_a_valid_carbon_instance()
     {
         $value = 'January 4th, 1984';
         $field = DatetimeField::make('created_at');
-        $this->assertInstanceOf(Field::class, $field->value($value));
-        $this->assertInstanceOf(Carbon::class, $field->handle());
-        $this->assertEquals(Carbon::parse($value)->toDateTimeString(), $field->handle()->toDateTimeString());
+        $field->value($value);
+        $date = $field->handle();
+        $this->assertInstanceOf(Carbon::class, $date);
+        $this->assertEquals(Carbon::parse($value)->toDateTimeString(), $date->toDateTimeString());
     }
 
     /** @test */
-    public function it_throws_an_exception_when_value_cannot_be_parsed_into_carbon_instance()
+    public function it_can_set_an_invalid_string_value_and_throws_an_exception()
     {
         $value = 'Not A Date Or Time';
         $field = DatetimeField::make('created_at');
-        $this->assertInstanceOf(Field::class, $field->value($value));
+        $field->value($value);
         $this->expectException(InvalidFormatException::class);
         $field->handle();
     }
 
     /** @test */
-    public function it_returns_null_when_value_cannot_be_parsed_into_carbon_instance_and_allow_null()
+    public function it_returns_null_when_nullable_and_an_invalid_string_value_is_set()
     {
         $value = 'Not A Date Or Time';
-        $field = DatetimeField::make('created_at')->value($value)->nullable();
+        $field = DatetimeField::make('created_at');
+        $field->nullable();
+        $field->value($value);
         $this->assertNull($field->handle());
     }
 
