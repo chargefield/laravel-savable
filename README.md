@@ -202,6 +202,60 @@ StringField::make('title')->transform(function ($fieldName, $fieldValue, $fields
 });
 ```
 
+### Custom Fields
+You can create custom fields with ease.
+
+**Example:**
+```php
+namespace App\Fields;
+
+use Chargefield\Supermodel\Fields\Field; 
+
+class CustomField extends Field
+{
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public function handle(array $data = [])
+    {
+        if (empty($this->value) && $this->nullable) {
+            return null;
+        }
+        
+        // Logic goes here
+
+        return $this->value;
+    }
+}
+```
+**Testing custom fields:**
+
+*Field::assertHandle*
+```php
+$field = CustomField::make('title');
+$field->value('Example Title');
+$field->assertHandle('Example Title'); // passed
+$field->assertHandle('Not The Same'); // failed
+```
+*Field::assertTransform*
+```php
+$field = CustomField::make('title');
+$field->value('Example Title');
+$field->transform(function ($name, $value, $data) {
+    return "{$data['prefix']} {$value}";
+});
+$field->assertTransform('Prefixed Example Title', ['prefix' => 'Prefixed']); // passed
+$field->assertTransform('Example Title', ['prefix' => 'Prefixed']); // failed
+```
+*Field::assertValidation*
+```php
+$field = CustomField::make('title');
+$field->rules('required|string');
+$field->assertValidation('Example Text'); // passed
+$field->assertValidation(''); // failed
+```
+
 ## Testing
 
 **You can run the tests with:**
