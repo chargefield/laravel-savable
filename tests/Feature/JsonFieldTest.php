@@ -1,9 +1,9 @@
 <?php
 
-namespace Chargefield\Supermodel\Tests\Feature;
+namespace Chargefield\Supermodels\Tests\Feature;
 
-use Chargefield\Supermodel\Fields\JsonField;
-use Chargefield\Supermodel\Tests\TestCase;
+use Chargefield\Supermodels\Fields\JsonField;
+use Chargefield\Supermodels\Tests\TestCase;
 
 class JsonFieldTest extends TestCase
 {

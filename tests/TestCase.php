@@ -1,8 +1,8 @@
 <?php
 
-namespace Chargefield\Supermodel\Tests;
+namespace Chargefield\Supermodels\Tests;
 
-use Chargefield\Supermodel\Tests\Fixtures\Post;
+use Chargefield\Supermodels\Tests\Fixtures\Post;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;

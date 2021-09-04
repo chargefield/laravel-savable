@@ -1,9 +1,9 @@
 <?php
 
-namespace Chargefield\Supermodel\Tests\Feature;
+namespace Chargefield\Supermodels\Tests\Feature;
 
-use Chargefield\Supermodel\Tests\Fixtures\Post;
-use Chargefield\Supermodel\Tests\TestCase;
+use Chargefield\Supermodels\Tests\Fixtures\Post;
+use Chargefield\Supermodels\Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;

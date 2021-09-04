@@ -1,9 +1,9 @@
 <?php
 
-namespace Chargefield\Supermodel\Tests\Feature;
+namespace Chargefield\Supermodels\Tests\Feature;
 
-use Chargefield\Supermodel\Fields\SlugField;
-use Chargefield\Supermodel\Tests\TestCase;
+use Chargefield\Supermodels\Fields\SlugField;
+use Chargefield\Supermodels\Tests\TestCase;
 
 class SlugFieldTest extends TestCase
 {

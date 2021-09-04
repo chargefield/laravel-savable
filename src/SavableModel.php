@@ -1,12 +1,12 @@
 <?php
 
-namespace Chargefield\Supermodel;
+namespace Chargefield\Supermodels;
 
-use Chargefield\Supermodel\Exceptions\FieldNotFoundException;
-use Chargefield\Supermodel\Exceptions\NoColumnsToSaveException;
-use Chargefield\Supermodel\Exceptions\NotSavableException;
-use Chargefield\Supermodel\Fields\Field;
-use Chargefield\Supermodel\Traits\Savable;
+use Chargefield\Supermodels\Exceptions\FieldNotFoundException;
+use Chargefield\Supermodels\Exceptions\NoColumnsToSaveException;
+use Chargefield\Supermodels\Exceptions\NotSavableException;
+use Chargefield\Supermodels\Fields\Field;
+use Chargefield\Supermodels\Traits\Savable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;

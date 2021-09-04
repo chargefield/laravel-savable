@@ -1,11 +1,11 @@
 <?php
 
-namespace Chargefield\Supermodel\Tests\Feature;
+namespace Chargefield\Supermodels\Tests\Feature;
 
 use BadMethodCallException;
-use Chargefield\Supermodel\Fields\Field;
-use Chargefield\Supermodel\Tests\Fixtures\TestField;
-use Chargefield\Supermodel\Tests\TestCase;
+use Chargefield\Supermodels\Fields\Field;
+use Chargefield\Supermodels\Tests\Fixtures\TestField;
+use Chargefield\Supermodels\Tests\TestCase;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 

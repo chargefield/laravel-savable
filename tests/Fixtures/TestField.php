@@ -1,8 +1,8 @@
 <?php
 
-namespace Chargefield\Supermodel\Tests\Fixtures;
+namespace Chargefield\Supermodels\Tests\Fixtures;
 
-use Chargefield\Supermodel\Fields\Field;
+use Chargefield\Supermodels\Fields\Field;
 
 class TestField extends Field
 {

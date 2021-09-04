@@ -1,17 +1,17 @@
 <?php
 
-namespace Chargefield\Supermodel\Tests\Feature;
+namespace Chargefield\Supermodels\Tests\Feature;
 
-use Chargefield\Supermodel\Exceptions\FieldNotFoundException;
-use Chargefield\Supermodel\Exceptions\NoColumnsToSaveException;
-use Chargefield\Supermodel\Exceptions\NotSavableException;
-use Chargefield\Supermodel\Fields\SlugField;
-use Chargefield\Supermodel\Fields\StringField;
-use Chargefield\Supermodel\SavableModel;
-use Chargefield\Supermodel\Tests\Fixtures\Post;
-use Chargefield\Supermodel\Tests\Fixtures\TestField;
-use Chargefield\Supermodel\Tests\TestCase;
-use Chargefield\Supermodel\Traits\Savable;
+use Chargefield\Supermodels\Exceptions\FieldNotFoundException;
+use Chargefield\Supermodels\Exceptions\NoColumnsToSaveException;
+use Chargefield\Supermodels\Exceptions\NotSavableException;
+use Chargefield\Supermodels\Fields\SlugField;
+use Chargefield\Supermodels\Fields\StringField;
+use Chargefield\Supermodels\SavableModel;
+use Chargefield\Supermodels\Tests\Fixtures\Post;
+use Chargefield\Supermodels\Tests\Fixtures\TestField;
+use Chargefield\Supermodels\Tests\TestCase;
+use Chargefield\Supermodels\Traits\Savable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -24,7 +24,7 @@ class SavableTraitTest extends TestCase
     /** @test */
     public function it_uses_the_savable_trait()
     {
-        $this->assertContains('Chargefield\\Supermodel\\Traits\\Savable', class_uses(new Post));
+        $this->assertContains('Chargefield\\Supermodels\\Traits\\Savable', class_uses(new Post));
     }
 
     /** @test */

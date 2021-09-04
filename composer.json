@@ -26,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Chargefield\\Supermodel\\": "src"
+            "Chargefield\\Supermodels\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Chargefield\\Supermodel\\Tests\\": "tests"
+            "Chargefield\\Supermodels\\Tests\\": "tests"
         }
     },
     "scripts": {

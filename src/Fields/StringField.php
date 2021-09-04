@@ -1,6 +1,6 @@
 <?php
 
-namespace Chargefield\Supermodel\Fields;
+namespace Chargefield\Supermodels\Fields;
 
 class StringField extends Field
 {

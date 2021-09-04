@@ -1,6 +1,6 @@
 <?php
 
-namespace Chargefield\Supermodel\Exceptions;
+namespace Chargefield\Supermodels\Exceptions;
 
 use Exception;
 use Illuminate\Http\UploadedFile;

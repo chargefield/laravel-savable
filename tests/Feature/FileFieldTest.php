@@ -1,10 +1,10 @@
 <?php
 
-namespace Chargefield\Supermodel\Tests\Feature;
+namespace Chargefield\Supermodels\Tests\Feature;
 
-use Chargefield\Supermodel\Exceptions\InvalidImageFileException;
-use Chargefield\Supermodel\Fields\FileField;
-use Chargefield\Supermodel\Tests\TestCase;
+use Chargefield\Supermodels\Exceptions\InvalidImageFileException;
+use Chargefield\Supermodels\Fields\FileField;
+use Chargefield\Supermodels\Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;

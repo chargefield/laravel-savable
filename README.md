@@ -21,7 +21,7 @@ composer require chargefield/supermodels
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Chargefield\Supermodel\Traits\Savable;
+use Chargefield\Supermodels\Traits\Savable;
 
 class Post extends Model
 {
@@ -35,8 +35,8 @@ class Post extends Model
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Chargefield\Supermodel\Fields\SlugField;
-use Chargefield\Supermodel\Fields\StringField;
+use Chargefield\Supermodels\Fields\SlugField;
+use Chargefield\Supermodels\Fields\StringField;
 use Illuminate\Http\Request;
 
 class PostController
@@ -66,15 +66,15 @@ $post = Post::make()->savable()->data([...])->columns([
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Chargefield\Supermodel\Fields\Field;
-use Chargefield\Supermodel\Traits\Savable;
-use Chargefield\Supermodel\Fields\JsonField;
-use Chargefield\Supermodel\Fields\SlugField;
-use Chargefield\Supermodel\Fields\FileField;
-use Chargefield\Supermodel\Fields\StringField;
-use Chargefield\Supermodel\Fields\BooleanField;
-use Chargefield\Supermodel\Fields\IntegerField;
-use Chargefield\Supermodel\Fields\DatetimeField;
+use Chargefield\Supermodels\Fields\Field;
+use Chargefield\Supermodels\Traits\Savable;
+use Chargefield\Supermodels\Fields\JsonField;
+use Chargefield\Supermodels\Fields\SlugField;
+use Chargefield\Supermodels\Fields\FileField;
+use Chargefield\Supermodels\Fields\StringField;
+use Chargefield\Supermodels\Fields\BooleanField;
+use Chargefield\Supermodels\Fields\IntegerField;
+use Chargefield\Supermodels\Fields\DatetimeField;
 
 class Post extends Model
 {
@@ -210,7 +210,7 @@ You can create custom fields with ease.
 ```php
 namespace App\Fields;
 
-use Chargefield\Supermodel\Fields\Field; 
+use Chargefield\Supermodels\Fields\Field; 
 
 class CustomField extends Field
 {
