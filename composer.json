@@ -1,11 +1,11 @@
 {
-    "name": "chargefield/supermodel",
+    "name": "chargefield/supermodels",
     "description": "A Laravel package that will turn your models into supermodels.",
     "keywords": [
         "chargefield",
-        "supermodel"
+        "supermodels"
     ],
-    "homepage": "https://github.com/chargefield/supermodel",
+    "homepage": "https://github.com/chargefield/supermodels",
     "license": "MIT",
     "type": "library",
     "authors": [
