@@ -39,15 +39,15 @@ class SlugField extends Field
     }
 
     /**
-     * @param array $fields
+     * @param array $data
      * @return string|null
      */
-    public function handle(array $fields = [])
+    public function handle(array $data = [])
     {
         $value = $this->value;
 
-        if (! empty($this->fromField) && isset($fields[$this->fromField])) {
-            $value = $fields[$this->fromField];
+        if (! empty($this->fromField) && isset($data[$this->fromField])) {
+            $value = $data[$this->fromField];
         }
 
         if (! is_string($value)) {

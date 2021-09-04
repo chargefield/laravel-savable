@@ -2,8 +2,14 @@
 
 namespace Chargefield\Supermodel\Fields;
 
+use BadMethodCallException;
 use Closure;
 
+/**
+ * @method void assertHandle($value, array $data = [])
+ * @method void assertTransform($value, array $data = [])
+ * @method void assertValidation($value)
+ */
 abstract class Field
 {
     /**
@@ -32,12 +38,21 @@ abstract class Field
     protected string $fieldName;
 
     /**
+     * @var FieldTesting|null
+     */
+    protected ?FieldTesting $test = null;
+
+    /**
      * @var mixed
      */
     protected $rules;
 
-    public function __construct(string $column, $defaultValue = null)
+    public function __construct(string $column, $defaultValue = null, bool $test = false)
     {
+        if ($test) {
+            $this->test = new FieldTesting($this);
+        }
+
         $this->column = $column;
         $this->value($defaultValue);
     }
@@ -53,6 +68,16 @@ abstract class Field
     }
 
     /**
+     * @param string $column
+     * @param null $defaultValue
+     * @return static
+     */
+    public static function fake(string $column, $defaultValue = null): self
+    {
+        return new static($column, $defaultValue, true);
+    }
+
+    /**
      * @param $value
      * @return $this
      */
@@ -61,6 +86,14 @@ abstract class Field
         $this->value = $value;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**
@@ -152,11 +185,24 @@ abstract class Field
     }
 
     /**
-     * @param array $fields
+     * @param array $data
      * @return mixed
      */
-    public function handle(array $fields = [])
+    public function handle(array $data = [])
     {
         return $this->value;
+    }
+
+    public function __call($name, $arguments)
+    {
+        if (! ($this->test instanceof FieldTesting)) {
+            throw new BadMethodCallException;
+        }
+
+        if (! method_exists($this->test, $name)) {
+            throw new BadMethodCallException;
+        }
+
+        $this->test->{$name}(...$arguments);
     }
 }

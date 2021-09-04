@@ -36,10 +36,10 @@ class JsonField extends Field
     }
 
     /**
-     * @param array $fields
+     * @param array $data
      * @return string|false|null
      */
-    public function handle(array $fields = [])
+    public function handle(array $data = [])
     {
         if (! is_array($this->value) && $this->nullable) {
             return null;

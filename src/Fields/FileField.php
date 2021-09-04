@@ -55,12 +55,12 @@ class FileField extends Field
     }
 
     /**
-     * @param array $fields
+     * @param array $data
      * @return string|null
      *
      * @throws InvalidImageFileException
      */
-    public function handle(array $fields = [])
+    public function handle(array $data = [])
     {
         $file = $this->value;
 

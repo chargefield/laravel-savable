@@ -2,9 +2,12 @@
 
 namespace Chargefield\Supermodel\Tests\Feature;
 
+use BadMethodCallException;
 use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Tests\Fixtures\TestField;
 use Chargefield\Supermodel\Tests\TestCase;
+use Exception;
+use PHPUnit\Framework\AssertionFailedError;
 
 class FieldTest extends TestCase
 {
@@ -15,11 +18,20 @@ class FieldTest extends TestCase
     }
 
     /** @test */
+    public function it_gets_a_valid_value_when_a_valid_value_is_set()
+    {
+        $value = 'Example Text';
+        $field = TestField::make('test');
+        $field->value($value);
+        $this->assertEquals($value, $field->getValue());
+    }
+
+    /** @test */
     public function it_returns_a_valid_value_when_a_valid_value_is_set()
     {
         $value = 'Example Text';
         $field = TestField::make('test');
-        $this->assertInstanceOf(Field::class, $field->value($value));
+        $field->value($value);
         $this->assertEquals($value, $field->handle());
     }
 
@@ -54,13 +66,13 @@ class FieldTest extends TestCase
     public function it_can_set_the_nullable_flag()
     {
         $class = new class('test') extends Field {
-            public function handle(array $fields = [])
+            public function handle(array $data = [])
             {
                 if ($this->nullable) {
                     return 'Not Null Text';
                 }
 
-                return parent::handle($fields);
+                return parent::handle($data);
             }
         };
         $field = $class->value('Example Text');
@@ -73,9 +85,9 @@ class FieldTest extends TestCase
     public function it_returns_a_valid_value_when_handle_gets_called()
     {
         $class = new class('test') extends Field {
-            public function handle(array $fields = [])
+            public function handle(array $data = [])
             {
-                return "{$this->value} {$fields['title']} Text";
+                return "{$this->value} {$data['title']} Text";
             }
         };
         $field = $class->value('Example');
@@ -125,5 +137,98 @@ class FieldTest extends TestCase
         $field->rules($rules);
         $this->assertTrue($field->hasRules());
         $this->assertEquals($rules, $field->getRules());
+    }
+
+    /** @test */
+    public function it_throws_bad_method_call_when_not_faking()
+    {
+        $field = TestField::make('test');
+        $field->value('Example Text');
+        $this->expectException(BadMethodCallException::class);
+        $field->assertHandle('Wrong Value');
+    }
+
+    /** @test */
+    public function it_throws_bad_method_call_when_faking_and_calling_a_method_that_does_not_exist()
+    {
+        $field = TestField::fake('test');
+        $field->value('Example Text');
+        $this->expectException(BadMethodCallException::class);
+        $field->assertMethodDoesNotExit('Wrong Value');
+    }
+
+    /** @test */
+    public function it_fails_asserting_handle()
+    {
+        $field = TestField::fake('test');
+        $field->value('Example Text');
+        $this->expectException(AssertionFailedError::class);
+        $field->assertHandle('Wrong Value');
+    }
+
+    /** @test */
+    public function it_passes_asserting_handle()
+    {
+        $field = TestField::fake('test');
+        $field->value('Example Text');
+
+        try {
+            $field->assertHandle('Example Text');
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->assertTrue(false, "Failed asserting that the handle method returned Example Test.");
+        }
+    }
+
+    /** @test */
+    public function it_fails_asserting_tranform_closure()
+    {
+        $field = TestField::fake('test');
+        $field->value('Example Text');
+        $field->transform(function ($name, $value, $data) {
+            return "{$data['prefix']} {$value}";
+        });
+        $this->expectException(AssertionFailedError::class);
+        $field->assertTransform('Example Text', ['prefix' => 'Prefixed']);
+    }
+
+    /** @test */
+    public function it_passes_asserting_tranform_closure()
+    {
+        $field = TestField::fake('test');
+        $field->value('Example Text');
+        $field->transform(function ($name, $value, $data) {
+            return "{$data['prefix']} {$value}";
+        });
+
+        try {
+            $field->assertTransform('Prefixed Example Text', ['prefix' => 'Prefixed']);
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->assertTrue(false, "Failed asserting that the transform closure returned Prefixed Example Test.");
+        }
+    }
+
+    /** @test */
+    public function it_fails_asserting_validation_passes()
+    {
+        $field = TestField::fake('test');
+        $field->rules('required|string');
+        $this->expectException(AssertionFailedError::class);
+        $field->assertValidation('');
+    }
+
+    /** @test */
+    public function it_passes_asserting_validation()
+    {
+        $field = TestField::fake('test');
+        $field->rules('required|string');
+
+        try {
+            $field->assertValidation('Example Text');
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->assertTrue(false, "Failed asserting that the validation passes.");
+        }
     }
 }

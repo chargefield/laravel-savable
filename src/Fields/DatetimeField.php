@@ -8,11 +8,11 @@ use Illuminate\Support\Carbon;
 class DatetimeField extends Field
 {
     /**
-     * @param array $fields
+     * @param array $data
      * @return \Illuminate\Support\Carbon|null
      * @throws \Carbon\Exceptions\InvalidFormatException
      */
-    public function handle(array $fields = [])
+    public function handle(array $data = [])
     {
         if (empty($this->value)) {
             return null;
