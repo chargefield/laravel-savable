@@ -1,5 +1,6 @@
 # Supermodels for Laravel
 
+[![Tests](https://github.com/chargefield/supermodels/actions/workflows/main.yml/badge.svg)](https://github.com/chargefield/supermodels/actions/workflows/main.yml)
 [![Latest Stable Version](https://poser.pugx.org/chargefield/supermodels/v/stable)](https://packagist.org/packages/chargefield/supermodels)
 [![Total Downloads](https://poser.pugx.org/chargefield/supermodels/downloads)](https://packagist.org/packages/chargefield/supermodels)
 [![License](https://poser.pugx.org/chargefield/supermodels/license)](https://packagist.org/packages/chargefield/supermodels)
