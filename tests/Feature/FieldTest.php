@@ -9,13 +9,13 @@ use Chargefield\Supermodel\Tests\TestCase;
 class FieldTest extends TestCase
 {
     /** @test */
-    public function it_can_make_a_new_test_field_instance()
+    public function it_can_make_a_new_field_instance()
     {
         $this->assertInstanceOf(TestField::class, TestField::make('test'));
     }
 
     /** @test */
-    public function it_can_set_and_get_the_value()
+    public function it_returns_a_valid_value_when_a_valid_value_is_set()
     {
         $value = 'Example Text';
         $field = TestField::make('test');
@@ -31,7 +31,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    public function it_can_compute_using_a_function_to_change_value()
+    public function it_returns_a_computed_value_when_transform_is_set_to_a_closure()
     {
         $field = TestField::make('test')->value('Example Text');
         $field->transform(function ($column, $value) {
@@ -41,23 +41,13 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    public function it_can_compute_using_a_function_with_prefix_data_to_change_value()
+    public function it_returns_a_computed_value_when_transform_is_set_to_a_closure_with_data_params()
     {
         $field = TestField::make('test')->value('Example Text');
-        $field->transform(function ($column, $value, string $prefix = '', string $suffix = '') {
-            return "{$prefix} {$value} on {$column}";
+        $field->transform(function ($column, $value, array $data) {
+            return "{$data['prefix']} {$value} on {$column}";
         });
-        $this->assertEquals('Prefixed Example Text on test', $field->compute(['Prefixed']));
-    }
-
-    /** @test */
-    public function it_can_compute_using_a_function_with_prefix_and_suffix_data_to_change_value()
-    {
-        $field = TestField::make('test')->value('Example Text');
-        $field->transform(function ($column, $value, string $prefix = '', string $suffix = '') {
-            return "{$prefix} {$value} {$suffix} on {$column}";
-        });
-        $this->assertEquals('Prefixed Example Text Suffixed on test', $field->compute(['Prefixed', 'Suffixed']));
+        $this->assertEquals('Prefixed Example Text on test', $field->compute(['prefix' => 'Prefixed']));
     }
 
     /** @test */
@@ -80,7 +70,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    public function it_can_handle_and_output_value()
+    public function it_returns_a_valid_value_when_handle_gets_called()
     {
         $class = new class('test') extends Field {
             public function handle(array $fields = [])
@@ -93,14 +83,14 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_data_key()
+    public function it_can_get_the_field_name()
     {
         $field = TestField::make('test');
         $this->assertEquals('test', $field->getFieldName());
     }
 
     /** @test */
-    public function it_can_set_and_get_data_key()
+    public function it_can_set_a_field_name()
     {
         $field = TestField::make('test');
         $field->fieldName('test_key');
@@ -108,7 +98,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_false_when_no_rules_are_set()
+    public function it_returns_no_validation_rules()
     {
         $field = TestField::make('test');
         $this->assertFalse($field->hasRules());
@@ -116,7 +106,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_the_rules_as_string()
+    public function it_returns_validation_rules()
     {
         $field = TestField::make('test');
         $field->rules('required|string');
@@ -125,17 +115,15 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_the_rules_as_an_array()
+    public function it_returns_validation_rules_when_rules_are_set_as_an_array()
     {
+        $rules = [
+            'required',
+            'string',
+        ];
         $field = TestField::make('test');
-        $field->rules([
-            'required',
-            'string',
-        ]);
+        $field->rules($rules);
         $this->assertTrue($field->hasRules());
-        $this->assertEquals([
-            'required',
-            'string',
-        ], $field->getRules());
+        $this->assertEquals($rules, $field->getRules());
     }
 }

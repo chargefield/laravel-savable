@@ -118,7 +118,7 @@ abstract class Field
     public function compute(array $data = [])
     {
         if ($this->computeCallback instanceof Closure) {
-            return ($this->computeCallback)($this->getFieldName(), $this->handle($data), ...$data);
+            return ($this->computeCallback)($this->getFieldName(), $this->handle($data), $data);
         }
 
         return $this->handle($data);
