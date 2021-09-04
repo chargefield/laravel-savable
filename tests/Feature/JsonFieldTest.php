@@ -2,7 +2,6 @@
 
 namespace Chargefield\Supermodel\Tests\Feature;
 
-use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Fields\JsonField;
 use Chargefield\Supermodel\Tests\TestCase;
 
@@ -15,45 +14,53 @@ class JsonFieldTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_and_get_the_value()
+    public function it_returns_a_valid_json_string_when_valid_value_is_set()
     {
         $value = [
             'title' => 'Example Text',
             'body' => 'An example body.',
         ];
         $field = JsonField::make('options');
-        $this->assertInstanceOf(Field::class, $field->value($value));
+        $field->value($value);
         $this->assertEquals('{"title":"Example Text","body":"An example body."}', $field->handle());
     }
 
     /** @test */
-    public function it_returns_null_when_value_is_not_set()
+    public function it_returns_null_when_nullable_and_value_is_not_set()
     {
-        $field = JsonField::make('options')->nullable();
+        $field = JsonField::make('options');
+        $field->nullable();
         $this->assertNull($field->handle());
     }
 
     /** @test */
-    public function it_can_set_pretty_json()
+    public function it_returns_a_valid_formatted_json_when_pretty_and_valid_value_is_set()
     {
         $data = ['title' => 'Example Text', 'body' => 'An example body.'];
-        $field = JsonField::make('options')->value($data)->pretty();
+        $field = JsonField::make('options');
+        $field->pretty();
+        $field->value($data);
         $this->assertEquals(json_encode($data, JSON_PRETTY_PRINT), $field->handle());
     }
 
     /** @test */
-    public function it_can_set_depth_to_1_and_return_false()
+    public function it_returns_false_when_depth_set_to_1_and_value_is_set_to_a_nested_array()
     {
         $data = ['options' => ['one', 'two']];
-        $field = JsonField::make('options')->value($data)->depth(1);
+        $field = JsonField::make('options');
+        $field->depth(1);
+        $field->value($data);
         $this->assertFalse($field->handle());
     }
 
     /** @test */
-    public function it_can_set_depth_to_1_and_return_null()
+    public function it_returns_null_when_nullable_and_depth_is_1_and_value_is_a_nested_array()
     {
         $data = ['options' => ['one', 'two']];
-        $field = JsonField::make('options')->value($data)->depth(1)->nullable();
+        $field = JsonField::make('options');
+        $field->nullable();
+        $field->depth(1);
+        $field->value($data);
         $this->assertNull($field->handle());
     }
 }
