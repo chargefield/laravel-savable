@@ -233,14 +233,14 @@ class CustomField extends Field
 
 *Field::assertHandle*
 ```php
-$field = CustomField::make('title');
+$field = CustomField::fake('title');
 $field->value('Example Title');
 $field->assertHandle('Example Title'); // passed
 $field->assertHandle('Not The Same'); // failed
 ```
 *Field::assertTransform*
 ```php
-$field = CustomField::make('title');
+$field = CustomField::fake('title');
 $field->value('Example Title');
 $field->transform(function ($name, $value, $data) {
     return "{$data['prefix']} {$value}";
@@ -250,7 +250,7 @@ $field->assertTransform('Example Title', ['prefix' => 'Prefixed']); // failed
 ```
 *Field::assertValidation*
 ```php
-$field = CustomField::make('title');
+$field = CustomField::fake('title');
 $field->rules('required|string');
 $field->assertValidation('Example Text'); // passed
 $field->assertValidation(''); // failed
