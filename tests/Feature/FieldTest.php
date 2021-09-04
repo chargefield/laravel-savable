@@ -222,7 +222,7 @@ class FieldTest extends TestCase
     public function it_passes_asserting_validation()
     {
         $field = TestField::fake('test');
-                $field->rules('required|string');
+        $field->rules('required|string');
 
         try {
             $field->assertValidation('Example Text');
