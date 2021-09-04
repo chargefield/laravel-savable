@@ -2,24 +2,23 @@
 
 namespace Chargefield\Supermodel\Tests\Feature;
 
-use Chargefield\Supermodel\Fields\Field;
 use Chargefield\Supermodel\Fields\StringField;
 use Chargefield\Supermodel\Tests\TestCase;
 
 class StringFieldTest extends TestCase
 {
     /** @test */
-    public function it_can_make_a_new_string_field_instance()
+    public function it_can_make_a_new_field_instance()
     {
         $this->assertInstanceOf(StringField::class, StringField::make('title'));
     }
 
     /** @test */
-    public function it_can_set_and_get_the_value()
+    public function it_returns_a_string_value_when_a_valid_value_is_set()
     {
         $value = 'Example Text';
         $field = StringField::make('title');
-        $this->assertInstanceOf(Field::class, $field->value($value));
+        $field->value($value);
         $this->assertEquals($value, $field->handle());
     }
 
@@ -31,16 +30,19 @@ class StringFieldTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_empty_string_when_value_is_set_to_empty_string()
+    public function it_returns_an_empty_string_when_value_is_set_to_an_empty_string()
     {
-        $field = StringField::make('title')->value('');
+        $field = StringField::make('title');
+        $field->value('');
         $this->assertEmpty($field->handle());
     }
 
     /** @test */
-    public function it_returns_null_when_value_is_set_to_empty_string()
+    public function it_returns_null_when_nullable_and_value_is_set_to_an_empty_string()
     {
-        $field = StringField::make('title')->value('')->nullable();
+        $field = StringField::make('title');
+        $field->nullable();
+        $field->value('');
         $this->assertNull($field->handle());
     }
 }
