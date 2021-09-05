@@ -2,6 +2,7 @@
 
 namespace Chargefield\Supermodels\Tests;
 
+use Chargefield\Supermodels\SupermodelsServiceProvider;
 use Chargefield\Supermodels\Tests\Fixtures\Post;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
@@ -18,6 +19,13 @@ class TestCase extends BaseTestCase
         $this->setUpDatabase($this->app);
 
         $this->setUpRoutes();
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            SupermodelsServiceProvider::class,
+        ];
     }
 
     protected function setUpRoutes(): void
