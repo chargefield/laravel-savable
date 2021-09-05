@@ -1,0 +1,23 @@
+<?php
+
+namespace {{ namespace }};
+
+use Chargefield\Supermodels\Fields\Field;
+
+class {{ class }} extends Field
+{
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public function handle(array $data = [])
+    {
+        if (empty($this->value) && $this->nullable) {
+            return null;
+        }
+
+        // Logic goes here
+
+        return $this->value;
+    }
+}
