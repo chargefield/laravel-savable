@@ -1,9 +1,9 @@
 # Laravel Savable
 
-[![Latest Stable Version](https://poser.pugx.org/chargefield/supermodels/v/stable)](https://packagist.org/packages/chargefield/supermodels)
-[![Total Downloads](https://poser.pugx.org/chargefield/supermodels/downloads)](https://packagist.org/packages/chargefield/supermodels)
-[![License](https://poser.pugx.org/chargefield/supermodels/license)](https://packagist.org/packages/chargefield/supermodels)
-[![Tests](https://github.com/chargefield/supermodels/actions/workflows/main.yml/badge.svg)](https://github.com/chargefield/supermodels/actions/workflows/main.yml)
+[![Latest Stable Version](https://poser.pugx.org/chargefield/laravel-savable/v/stable)](https://packagist.org/packages/chargefield/laravel-savable)
+[![Total Downloads](https://poser.pugx.org/chargefield/laravel-savable/downloads)](https://packagist.org/packages/chargefield/laravel-savable)
+[![License](https://poser.pugx.org/chargefield/laravel-savable/license)](https://packagist.org/packages/chargefield/laravel-savable)
+[![Tests](https://github.com/chargefield/laravel-savable/actions/workflows/main.yml/badge.svg)](https://github.com/chargefield/laravel-savable/actions/workflows/main.yml)
 
 Savable is a Laravel package that will help you organize your business logic.
 
@@ -131,7 +131,7 @@ or
 Post::make()->savable()->data([...])->columns([...])->getErrors();
 // return Illuminate\Support\MessageBag
 ```
-**NOTE:** *[Fields](https://github.com/chargefield/supermodels#fields) must set `rules([...])` in order to validate their data.*
+**NOTE:** *[Fields](https://github.com/chargefield/laravel-savable#fields) must set `rules([...])` in order to validate their data.*
 
 ## Fields
 

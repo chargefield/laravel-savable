@@ -6,7 +6,7 @@
         "laravel",
         "savable"
     ],
-    "homepage": "https://github.com/chargefield/supermodels",
+    "homepage": "https://github.com/chargefield/laravel-savable",
     "license": "MIT",
     "type": "library",
     "authors": [

@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `supermodels` will be documented in this file
+All notable changes to `laravel-savable` will be documented in this file
 
 ## 1.1.0 - 2021-09-04
 

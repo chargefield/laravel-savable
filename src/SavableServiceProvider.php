@@ -14,8 +14,8 @@ class SavableServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/supermodels.php',
-            'supermodels'
+            __DIR__ . '/../config/savable.php',
+            'savable'
         );
 
         $this->registerCommands();
@@ -31,7 +31,7 @@ class SavableServiceProvider extends ServiceProvider
     protected function registerPublishables(): void
     {
         $this->publishes([
-            __DIR__.'/../config/supermodels.php' => config_path('supermodels.php'),
+            __DIR__ . '/../config/savable.php' => config_path('savable.php'),
         ], 'config');
     }
 }
