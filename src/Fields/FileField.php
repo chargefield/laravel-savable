@@ -2,7 +2,7 @@
 
 namespace Chargefield\Savable\Fields;
 
-use Chargefield\Savable\Exceptions\InvalidImageFileException;
+use Chargefield\Savable\Exceptions\InvalidUploadFileException;
 use Illuminate\Http\UploadedFile;
 
 class FileField extends Field
@@ -58,7 +58,7 @@ class FileField extends Field
      * @param array $data
      * @return string|null
      *
-     * @throws InvalidImageFileException
+     * @throws InvalidUploadFileException
      */
     public function handle(array $data = [])
     {
@@ -69,7 +69,7 @@ class FileField extends Field
                 return null;
             }
 
-            throw new InvalidImageFileException($file);
+            throw new InvalidUploadFileException($file);
         }
 
         if ($this->withOriginalName) {

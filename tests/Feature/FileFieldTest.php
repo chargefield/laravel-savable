@@ -2,7 +2,7 @@
 
 namespace Chargefield\Savable\Tests\Feature;
 
-use Chargefield\Savable\Exceptions\InvalidImageFileException;
+use Chargefield\Savable\Exceptions\InvalidUploadFileException;
 use Chargefield\Savable\Fields\FileField;
 use Chargefield\Savable\Tests\TestCase;
 use Illuminate\Http\UploadedFile;
@@ -104,7 +104,7 @@ class FileFieldTest extends TestCase
 
         $field = FileField::make('image');
         $field->value('not-a-valid-file-object');
-        $this->expectException(InvalidImageFileException::class);
+        $this->expectException(InvalidUploadFileException::class);
         $field->handle();
     }
 }

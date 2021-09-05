@@ -5,7 +5,7 @@ namespace Chargefield\Savable\Exceptions;
 use Exception;
 use Illuminate\Http\UploadedFile;
 
-class InvalidImageFileException extends Exception
+class InvalidUploadFileException extends Exception
 {
     public function __construct($file)
     {
