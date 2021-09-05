@@ -58,7 +58,7 @@ class PostController
 ### Savable Columns
 **Setting columns:**
 ```php
-$post = Post::make()->savable()->data([...])->columns([
+$post = Post::make()->savable([...])->columns([
     StringField::make('title'),
     SlugField::make('slug')->fromField('title'),
     StringField::make('body'),
@@ -107,7 +107,11 @@ class Post extends Model
 ### Savable Data
 **Setting data:**
 ```php
-$post = Post::make()->savable()->data([...])->columns([...])->save();
+$post = Post::make()->savable(request()->all())->columns([...])->save();
+```
+or
+```php
+$post = Post::make()->savable()->data(request()->all())->columns([...])->save();
 ```
 **Setting data from request:**
 ```php
