@@ -204,9 +204,11 @@ StringField::make('title')->transform(function ($fieldName, $fieldValue, $fields
 ```
 
 ### Custom Fields
-You can create custom fields with ease.
-
-**Example:**
+You can create custom fields with ease using the artisan command.
+```bash
+php artisan make:field CustomField
+```
+**Outputs:**
 ```php
 namespace App\Fields;
 
