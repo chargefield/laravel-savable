@@ -11,7 +11,7 @@ use Chargefield\Supermodels\SavableModel;
 use Chargefield\Supermodels\Tests\Fixtures\Post;
 use Chargefield\Supermodels\Tests\Fixtures\TestField;
 use Chargefield\Supermodels\Tests\TestCase;
-use Chargefield\Supermodels\Traits\Savable;
+use Chargefield\Supermodels\Traits\IsSavable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -24,7 +24,7 @@ class SavableTraitTest extends TestCase
     /** @test */
     public function it_uses_the_savable_trait()
     {
-        $this->assertContains('Chargefield\\Supermodels\\Traits\\Savable', class_uses(new Post));
+        $this->assertContains('Chargefield\\Supermodels\\Traits\\IsSavable', class_uses(new Post));
     }
 
     /** @test */
@@ -107,7 +107,7 @@ class SavableTraitTest extends TestCase
     public function it_throws_an_exception_when_savable_columns_is_not_defined()
     {
         $post = new class extends Model {
-            use Savable;
+            use IsSavable;
         };
 
         $this->expectException(NoColumnsToSaveException::class);
@@ -119,7 +119,7 @@ class SavableTraitTest extends TestCase
     public function it_throws_an_exception_when_savable_columns_returns_an_empty_array()
     {
         $post = new class extends Model {
-            use Savable;
+            use IsSavable;
 
             public function savableColumns(): array
             {
@@ -136,7 +136,7 @@ class SavableTraitTest extends TestCase
     public function it_throws_an_exception_when_savable_columns_has_an_invalid_field()
     {
         $post = new class extends Model {
-            use Savable;
+            use IsSavable;
 
             public function savableColumns(): array
             {
@@ -376,7 +376,7 @@ class SavableTraitTest extends TestCase
 
             protected $guarded = [];
 
-            use Savable;
+            use IsSavable;
 
             public function savableColumns(): array
             {

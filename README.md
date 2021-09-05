@@ -1,31 +1,32 @@
-# Supermodels for Laravel
+# Laravel Savable
 
 [![Latest Stable Version](https://poser.pugx.org/chargefield/supermodels/v/stable)](https://packagist.org/packages/chargefield/supermodels)
 [![Total Downloads](https://poser.pugx.org/chargefield/supermodels/downloads)](https://packagist.org/packages/chargefield/supermodels)
 [![License](https://poser.pugx.org/chargefield/supermodels/license)](https://packagist.org/packages/chargefield/supermodels)
 [![Tests](https://github.com/chargefield/supermodels/actions/workflows/main.yml/badge.svg)](https://github.com/chargefield/supermodels/actions/workflows/main.yml)
 
-Supermodels is a Laravel package that will help you organize your business logic.
+Savable is a Laravel package that will help you organize your business logic.
 
 ## Installation
 
 **You can install the package via composer:**
 ```bash
-composer require chargefield/supermodels
+composer require chargefield/laravel-savable
 ```
 
 ## Usage
 
 ### Savable Trait
+
 ```php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Chargefield\Supermodels\Traits\Savable;
+use Chargefield\Supermodels\Traits\IsSavable;
 
 class Post extends Model
 {
-    use Savable;
+    use IsSavable;
 }
 ```
 
@@ -62,12 +63,13 @@ $post = Post::make()->savable()->data([...])->columns([
 ])->save();
 ```
 **Alternatively, you can set savable columns in a model:**
+
 ```php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Chargefield\Supermodels\Fields\Field;
-use Chargefield\Supermodels\Traits\Savable;
+use Chargefield\Supermodels\Traits\IsSavable;
 use Chargefield\Supermodels\Fields\JsonField;
 use Chargefield\Supermodels\Fields\SlugField;
 use Chargefield\Supermodels\Fields\FileField;
@@ -78,7 +80,7 @@ use Chargefield\Supermodels\Fields\DatetimeField;
 
 class Post extends Model
 {
-    use Savable;
+    use IsSavable;
 
     /**
      * @return Field[]

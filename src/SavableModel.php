@@ -6,7 +6,7 @@ use Chargefield\Supermodels\Exceptions\FieldNotFoundException;
 use Chargefield\Supermodels\Exceptions\NoColumnsToSaveException;
 use Chargefield\Supermodels\Exceptions\NotSavableException;
 use Chargefield\Supermodels\Fields\Field;
-use Chargefield\Supermodels\Traits\Savable;
+use Chargefield\Supermodels\Traits\IsSavable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -57,7 +57,7 @@ class SavableModel
     {
         $traits = class_uses_recursive($model);
 
-        return in_array(Savable::class, $traits);
+        return in_array(IsSavable::class, $traits);
     }
 
     /**

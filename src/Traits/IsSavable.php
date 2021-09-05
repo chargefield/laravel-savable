@@ -11,7 +11,7 @@ use Throwable;
 /**
  * @method static findOrFail($model)
  */
-trait Savable
+trait IsSavable
 {
     /**
      * @return Field[]

@@ -9,12 +9,12 @@ use Chargefield\Supermodels\Fields\FileField;
 use Chargefield\Supermodels\Fields\JsonField;
 use Chargefield\Supermodels\Fields\SlugField;
 use Chargefield\Supermodels\Fields\StringField;
-use Chargefield\Supermodels\Traits\Savable;
+use Chargefield\Supermodels\Traits\IsSavable;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use Savable;
+    use IsSavable;
 
     protected $table = 'posts';
 
