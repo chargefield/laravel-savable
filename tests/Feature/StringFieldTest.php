@@ -1,9 +1,9 @@
 <?php
 
-namespace Chargefield\Supermodels\Tests\Feature;
+namespace Chargefield\Savable\Tests\Feature;
 
-use Chargefield\Supermodels\Fields\StringField;
-use Chargefield\Supermodels\Tests\TestCase;
+use Chargefield\Savable\Fields\StringField;
+use Chargefield\Savable\Tests\TestCase;
 
 class StringFieldTest extends TestCase
 {

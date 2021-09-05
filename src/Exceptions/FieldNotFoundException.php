@@ -1,8 +1,8 @@
 <?php
 
-namespace Chargefield\Supermodels\Exceptions;
+namespace Chargefield\Savable\Exceptions;
 
-use Chargefield\Supermodels\Fields\Field;
+use Chargefield\Savable\Fields\Field;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 

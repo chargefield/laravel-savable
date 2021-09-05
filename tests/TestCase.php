@@ -1,9 +1,9 @@
 <?php
 
-namespace Chargefield\Supermodels\Tests;
+namespace Chargefield\Savable\Tests;
 
-use Chargefield\Supermodels\SavableServiceProvider;
-use Chargefield\Supermodels\Tests\Fixtures\Post;
+use Chargefield\Savable\SavableServiceProvider;
+use Chargefield\Savable\Tests\Fixtures\Post;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;

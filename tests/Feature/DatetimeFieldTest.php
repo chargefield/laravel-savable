@@ -1,10 +1,10 @@
 <?php
 
-namespace Chargefield\Supermodels\Tests\Feature;
+namespace Chargefield\Savable\Tests\Feature;
 
 use Carbon\Exceptions\InvalidFormatException;
-use Chargefield\Supermodels\Fields\DatetimeField;
-use Chargefield\Supermodels\Tests\TestCase;
+use Chargefield\Savable\Fields\DatetimeField;
+use Chargefield\Savable\Tests\TestCase;
 use Illuminate\Support\Carbon;
 
 class DatetimeFieldTest extends TestCase

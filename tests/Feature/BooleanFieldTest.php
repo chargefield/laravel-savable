@@ -1,9 +1,9 @@
 <?php
 
-namespace Chargefield\Supermodels\Tests\Feature;
+namespace Chargefield\Savable\Tests\Feature;
 
-use Chargefield\Supermodels\Fields\BooleanField;
-use Chargefield\Supermodels\Tests\TestCase;
+use Chargefield\Savable\Fields\BooleanField;
+use Chargefield\Savable\Tests\TestCase;
 
 class BooleanFieldTest extends TestCase
 {

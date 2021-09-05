@@ -1,10 +1,10 @@
 <?php
 
-namespace Chargefield\Supermodels\Traits;
+namespace Chargefield\Savable\Traits;
 
-use Chargefield\Supermodels\Exceptions\NotSavableException;
-use Chargefield\Supermodels\Fields\Field;
-use Chargefield\Supermodels\Savable;
+use Chargefield\Savable\Exceptions\NotSavableException;
+use Chargefield\Savable\Fields\Field;
+use Chargefield\Savable\Savable;
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
 

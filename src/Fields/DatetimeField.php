@@ -1,6 +1,6 @@
 <?php
 
-namespace Chargefield\Supermodels\Fields;
+namespace Chargefield\Savable\Fields;
 
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Support\Carbon;

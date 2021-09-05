@@ -1,15 +1,15 @@
 <?php
 
-namespace Chargefield\Supermodels\Tests\Fixtures;
+namespace Chargefield\Savable\Tests\Fixtures;
 
-use Chargefield\Supermodels\Fields\BooleanField;
-use Chargefield\Supermodels\Fields\DatetimeField;
-use Chargefield\Supermodels\Fields\Field;
-use Chargefield\Supermodels\Fields\FileField;
-use Chargefield\Supermodels\Fields\JsonField;
-use Chargefield\Supermodels\Fields\SlugField;
-use Chargefield\Supermodels\Fields\StringField;
-use Chargefield\Supermodels\Traits\IsSavable;
+use Chargefield\Savable\Fields\BooleanField;
+use Chargefield\Savable\Fields\DatetimeField;
+use Chargefield\Savable\Fields\Field;
+use Chargefield\Savable\Fields\FileField;
+use Chargefield\Savable\Fields\JsonField;
+use Chargefield\Savable\Fields\SlugField;
+use Chargefield\Savable\Fields\StringField;
+use Chargefield\Savable\Traits\IsSavable;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model

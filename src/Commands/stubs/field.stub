@@ -2,7 +2,7 @@
 
 namespace {{ namespace }};
 
-use Chargefield\Supermodels\Fields\Field;
+use Chargefield\Savable\Fields\Field;
 
 class {{ class }} extends Field
 {

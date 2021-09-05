@@ -1,8 +1,8 @@
 <?php
 
-namespace Chargefield\Supermodels\Fields;
+namespace Chargefield\Savable\Fields;
 
-use Chargefield\Supermodels\Exceptions\InvalidImageFileException;
+use Chargefield\Savable\Exceptions\InvalidImageFileException;
 use Illuminate\Http\UploadedFile;
 
 class FileField extends Field

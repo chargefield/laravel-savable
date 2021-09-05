@@ -1,8 +1,8 @@
 <?php
 
-namespace Chargefield\Supermodels\Tests\Feature;
+namespace Chargefield\Savable\Tests\Feature;
 
-use Chargefield\Supermodels\Tests\TestCase;
+use Chargefield\Savable\Tests\TestCase;
 use Illuminate\Support\Facades\File;
 
 class FieldMakeCommandTest extends TestCase

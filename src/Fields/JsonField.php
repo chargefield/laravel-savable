@@ -1,6 +1,6 @@
 <?php
 
-namespace Chargefield\Supermodels\Fields;
+namespace Chargefield\Savable\Fields;
 
 class JsonField extends Field
 {

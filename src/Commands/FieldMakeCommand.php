@@ -1,6 +1,6 @@
 <?php
 
-namespace Chargefield\Supermodels\Commands;
+namespace Chargefield\Savable\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 

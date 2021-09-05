@@ -1,6 +1,6 @@
 <?php
 
-namespace Chargefield\Supermodels\Fields;
+namespace Chargefield\Savable\Fields;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Testing\Assert;

@@ -19,7 +19,7 @@
         </include>
     </coverage>
     <testsuites>
-        <testsuite name="Supermodel Test Suite">
+        <testsuite name="Savable Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

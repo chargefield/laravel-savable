@@ -1,6 +1,6 @@
 <?php
 
-namespace Chargefield\Supermodels;
+namespace Chargefield\Savable;
 
 use Illuminate\Support\ServiceProvider;
 

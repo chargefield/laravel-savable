@@ -22,7 +22,7 @@ composer require chargefield/laravel-savable
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Chargefield\Supermodels\Traits\IsSavable;
+use Chargefield\Savable\Traits\IsSavable;
 
 class Post extends Model
 {
@@ -36,8 +36,8 @@ class Post extends Model
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Chargefield\Supermodels\Fields\SlugField;
-use Chargefield\Supermodels\Fields\StringField;
+use Chargefield\Savable\Fields\SlugField;
+use Chargefield\Savable\Fields\StringField;
 use Illuminate\Http\Request;
 
 class PostController
@@ -68,15 +68,15 @@ $post = Post::make()->savable()->data([...])->columns([
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Chargefield\Supermodels\Fields\Field;
-use Chargefield\Supermodels\Traits\IsSavable;
-use Chargefield\Supermodels\Fields\JsonField;
-use Chargefield\Supermodels\Fields\SlugField;
-use Chargefield\Supermodels\Fields\FileField;
-use Chargefield\Supermodels\Fields\StringField;
-use Chargefield\Supermodels\Fields\BooleanField;
-use Chargefield\Supermodels\Fields\IntegerField;
-use Chargefield\Supermodels\Fields\DatetimeField;
+use Chargefield\Savable\Fields\Field;
+use Chargefield\Savable\Traits\IsSavable;
+use Chargefield\Savable\Fields\JsonField;
+use Chargefield\Savable\Fields\SlugField;
+use Chargefield\Savable\Fields\FileField;
+use Chargefield\Savable\Fields\StringField;
+use Chargefield\Savable\Fields\BooleanField;
+use Chargefield\Savable\Fields\IntegerField;
+use Chargefield\Savable\Fields\DatetimeField;
 
 class Post extends Model
 {
@@ -214,7 +214,7 @@ php artisan make:field CustomField
 ```php
 namespace App\Fields;
 
-use Chargefield\Supermodels\Fields\Field; 
+use Chargefield\Savable\Fields\Field; 
 
 class CustomField extends Field
 {
