@@ -2,8 +2,7 @@ name: feature-tests
 
 on:
     push:
-        branches:
-          - '*'
+        branches: [*]
 
 jobs:
     test:
