@@ -3,9 +3,7 @@ name: feature-tests
 on:
     push:
         branches:
-            - '*'
-            - '*/*'
-            - '**'
+            - 'feature/*'
 
 jobs:
     test:
