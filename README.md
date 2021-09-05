@@ -1,3 +1,5 @@
+<p align="center"><img src="/logo.png" alt="Social Icon of Laravel Savable" width="160" height="160" title="Laravel Savable"></p>
+
 # Laravel Savable
 
 [![Latest Stable Version](https://poser.pugx.org/chargefield/laravel-savable/v/stable)](https://packagist.org/packages/chargefield/laravel-savable)
