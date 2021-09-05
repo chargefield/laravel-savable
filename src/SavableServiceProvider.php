@@ -4,7 +4,7 @@ namespace Chargefield\Supermodels;
 
 use Illuminate\Support\ServiceProvider;
 
-class SupermodelsServiceProvider extends ServiceProvider
+class SavableServiceProvider extends ServiceProvider
 {
     public function boot()
     {

@@ -1,9 +1,10 @@
 {
-    "name": "chargefield/supermodels",
-    "description": "A Laravel package that will turn your models into supermodels.",
+    "name": "chargefield/laravel-savable",
+    "description": "Savable is a Laravel package that will help you organize your business logic.",
     "keywords": [
         "chargefield",
-        "supermodels"
+        "laravel",
+        "savable"
     ],
     "homepage": "https://github.com/chargefield/supermodels",
     "license": "MIT",
@@ -38,7 +39,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Chargefield\\Supermodels\\SupermodelsServiceProvider"
+              "SavableServiceProvider"
             ]
         }
     },

@@ -2,7 +2,7 @@
 
 namespace Chargefield\Supermodels\Tests;
 
-use Chargefield\Supermodels\SupermodelsServiceProvider;
+use Chargefield\Supermodels\SavableServiceProvider;
 use Chargefield\Supermodels\Tests\Fixtures\Post;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
@@ -24,7 +24,7 @@ class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
-            SupermodelsServiceProvider::class,
+            SavableServiceProvider::class,
         ];
     }
 
