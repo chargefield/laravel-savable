@@ -4,7 +4,7 @@ namespace Chargefield\Supermodels\Traits;
 
 use Chargefield\Supermodels\Exceptions\NotSavableException;
 use Chargefield\Supermodels\Fields\Field;
-use Chargefield\Supermodels\SavableModel;
+use Chargefield\Supermodels\Savable;
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
 
@@ -42,13 +42,13 @@ trait IsSavable
 
     /**
      * @param array $data
-     * @return SavableModel
+     * @return Savable
      *
      * @throws NotSavableException
      */
-    public function savable(array $data = []): SavableModel
+    public function savable(array $data = []): Savable
     {
         /** @var Model $this */
-        return new SavableModel($this, $data);
+        return new Savable($this, $data);
     }
 }

@@ -7,7 +7,7 @@ use Chargefield\Supermodels\Exceptions\NoColumnsToSaveException;
 use Chargefield\Supermodels\Exceptions\NotSavableException;
 use Chargefield\Supermodels\Fields\SlugField;
 use Chargefield\Supermodels\Fields\StringField;
-use Chargefield\Supermodels\SavableModel;
+use Chargefield\Supermodels\Savable;
 use Chargefield\Supermodels\Tests\Fixtures\Post;
 use Chargefield\Supermodels\Tests\Fixtures\TestField;
 use Chargefield\Supermodels\Tests\TestCase;
@@ -343,13 +343,13 @@ class SavableTraitTest extends TestCase
 
         $this->expectException(NotSavableException::class);
 
-        new SavableModel($class);
+        new Savable($class);
     }
 
     /** @test */
     public function it_returns_false_if_no_validator_and_has_validation_errors_is_called()
     {
-        $savable = new SavableModel(new Post);
+        $savable = new Savable(new Post);
 
         $this->assertFalse($savable->hasErrors());
     }
@@ -357,7 +357,7 @@ class SavableTraitTest extends TestCase
     /** @test */
     public function it_returns_false_if_no_validator_and_get_validation_errors_is_called()
     {
-        $savable = new SavableModel(new Post);
+        $savable = new Savable(new Post);
 
         $this->assertInstanceOf(MessageBag::class, $savable->getErrors());
         $this->assertCount(0, $savable->getErrors());

@@ -15,7 +15,7 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
-class SavableModel
+class Savable
 {
     protected Model $model;
 
